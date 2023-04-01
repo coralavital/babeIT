@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "840943454960",
+    "project_id": "babeit",
+    "storage_bucket": "babeit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:840943454960:android:2aa2f6bc58cb6914f15035",
+        "android_client_info": {
+          "package_name": "com.sce.babe_it"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "840943454960-n7lhrujug2s3eira74n3cbaj0m779cap.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYEpBj9TyYbL04IP68Rq_3T9Da1B_iMoI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "840943454960-n7lhrujug2s3eira74n3cbaj0m779cap.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "840943454960-eh74keoh1ur9stq2rq81i011jo3k4q10.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.babeIt"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:840943454960:android:9f8d3d59ae5f7226f15035",
+        "android_client_info": {
+          "package_name": "com.sce.babeit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "840943454960-n7lhrujug2s3eira74n3cbaj0m779cap.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYEpBj9TyYbL04IP68Rq_3T9Da1B_iMoI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "840943454960-n7lhrujug2s3eira74n3cbaj0m779cap.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "840943454960-eh74keoh1ur9stq2rq81i011jo3k4q10.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.babeIt"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
