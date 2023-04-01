@@ -5,25 +5,23 @@ import 'package:flutter/material.dart';
 import 'package:babe_it/theme/theme_colors.dart';
 
 class ListContainer extends StatelessWidget {
-  final String illustration;
   final String title;
   List<dynamic> elementList;
   String elements = "";
   ListContainer({
     super.key,
-    required this.illustration,
     required this.title,
     required this.elementList,
   });
 
   @override
   Widget build(BuildContext context) {
-    elementList=elementList..sort((a, b) => DateTime.parse(a['time']).compareTo(DateTime.parse(b['time'])));
+    elementList
+        .sort((a, b) => (a["time"] as String).compareTo(b["time"] as String));
     for (int i = 0; i < elementList.length; i++) {
       elements +=
           '${elementList[i]['time']} - ${elementList[i]['measurement']}\n';
     }
-    print(elementList);
     return Container(
       padding: EdgeInsets.only(left: 10),
       width: double.infinity,
@@ -50,17 +48,21 @@ class ListContainer extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 5),
-                  child: Text(
-                    elements,
-                    overflow: TextOverflow.visible,
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 12,
+                Expanded(
+                    child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 5),
+                    child: Text(
+                      elements,
+                      overflow: TextOverflow.visible,
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 12,
+                      ),
                     ),
                   ),
-                ),
+                ))
               ],
             ),
           ),

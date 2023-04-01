@@ -31,7 +31,7 @@ class _MainHomeState extends State<MainHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[currentPage],
-      backgroundColor: Colors.white,
+      backgroundColor: Color.fromARGB(255, 21, 21, 37),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(
           left: 15,

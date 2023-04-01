@@ -24,7 +24,7 @@ class CarouselSliderWidget extends StatelessWidget {
         autoPlay: true,
         height: 160,
         enlargeCenterPage: true,
-        autoPlayAnimationDuration: Duration(
+        autoPlayAnimationDuration: const Duration(
           milliseconds: 1000,
         ),
       ),

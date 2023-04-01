@@ -1,14 +1,7 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:babe_it/theme/theme_colors.dart';
 import 'package:babe_it/widgets/list_container.dart';
-import 'package:intl/intl.dart';
 
 class ProjectsList extends StatefulWidget {
   const ProjectsList({super.key});
@@ -20,13 +13,6 @@ class ProjectsList extends StatefulWidget {
 class _ProjectsListState extends State<ProjectsList> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final List<Color> _list = [
-    ThemeColors().main,
-    ThemeColors().pink,
-    ThemeColors().purple,
-    ThemeColors().purpleAccent,
-    ThemeColors().yellow,
-  ];
 
   final List<String> sensors = [
     'heart_rate_sensor',
@@ -89,12 +75,9 @@ class _ProjectsListState extends State<ProjectsList> {
                         itemCount: 3,
                         physics: BouncingScrollPhysics(),
                         itemBuilder: ((context, index) {
-                          var colorsList =
-                              _list[Random().nextInt(_list.length)];
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 10),
                             child: ListContainer(
-                              illustration: getSensorTitle(sensors[index]),
                               elementList:
                                   snapshot.data!['Sensors'][sensors[index]]['history'],
                               title: getSensorTitle(sensors[index]),

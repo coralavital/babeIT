@@ -21,9 +21,7 @@ class AuthRes {
           'name': name,
           'surname': surname,
           'email': email,
-          'photoUrl': photoUrl,
-          'password': password,
-          'uid': _auth.currentUser!.uid,
+          // 'baby_details':,
         });
         res = 'success';
       } catch (error) {

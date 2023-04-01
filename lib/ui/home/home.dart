@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color.fromARGB(255, 21, 21, 37),
       appBar: AppBar(
         scrolledUnderElevation: 0,
         toolbarHeight: 15,

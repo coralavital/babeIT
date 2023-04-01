@@ -2,7 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:babe_it/widgets/settings_widget.dart';
+import 'package:babe_it/widgets/baby_details.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -25,7 +25,7 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'Account',
@@ -34,17 +34,27 @@ class _SettingsPageState extends State<SettingsPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                ElevatedButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                  },
+                  child: Icon(Icons.logout_outlined, color: Colors.amber),
+                ),
               ],
             ),
             SizedBox(
               height: 15,
             ),
-            SettingsWidget(),
+            BabyDetails(),
+            SizedBox(
+              height: 15,
+            ),
             ElevatedButton(
               onPressed: () {
-                FirebaseAuth.instance.signOut();
+                User? user = FirebaseAuth.instance.currentUser;
+                user!.delete();
               },
-              child: Text('Logout'),
+              child: Text('Delete Account'),
             ),
           ],
         ),
