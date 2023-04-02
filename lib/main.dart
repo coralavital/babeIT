@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
+        colorScheme: const ColorScheme.light(),
         fontFamily: 'Poppins',
       ),
       home: const CheckUserState(),

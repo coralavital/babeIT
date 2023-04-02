@@ -7,6 +7,8 @@ import 'package:babe_it/theme/theme_colors.dart';
 import 'package:babe_it/widgets/custom_widget.dart';
 import 'package:intl/intl.dart';
 
+import '../../widgets/custom_notifications.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -17,6 +19,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  List? allNotifications;
+  List availableSensor = [
+    'heart_rate_sensor',
+    'infrared_sensor',
+    'sound_sensor'
+  ];
 
   final List<String> sensors = [
     'heart_rate_sensor',
@@ -27,20 +35,18 @@ class _HomePageState extends State<HomePage> {
   String currentDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
 
   getSensorTitle(String sensor) {
-    if(sensor == 'heart_rate_sensor') {
+    if (sensor == 'heart_rate_sensor') {
       return "Hart Rate Sensor";
     } else if (sensor == 'infrared_sensor') {
       return "Infrared Sensor";
     } else {
       return 'Sound Sensor';
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 21, 21, 37),
       appBar: AppBar(
         scrolledUnderElevation: 0,
         toolbarHeight: 15,
@@ -65,9 +71,9 @@ class _HomePageState extends State<HomePage> {
                       return Text(
                         'Hello, ${snapshot.data!.get('name')}',
                         style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        ),
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: ThemeColors().welcome),
                       );
                     }
                   }),
@@ -90,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                         color: ThemeColors().grey,
                         borderRadius: BorderRadius.circular(25),
                       ),
-                      height: 130,
+                      height: 115,
                       width: double.infinity,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -98,17 +104,17 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             'Today',
                             style: TextStyle(
-                              color: Colors.white70,
+                              color: Colors.black54,
                               fontSize: 16,
                             ),
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 5,
                           ),
                           Text(
                             currentDate,
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black54,
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
                             ),
@@ -127,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           'Sensor Indicators',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Colors.black54,
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
@@ -136,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                           width: 10,
                         ),
                         Container(
-                          height: 25,
+                          height: 20,
                           width: 120,
                           decoration: BoxDecoration(
                             color: ThemeColors().grey.withOpacity(0.5),
@@ -151,11 +157,22 @@ class _HomePageState extends State<HomePage> {
                               if (!snapshot.hasData) {
                                 return Container();
                               } else {
+                                // Shows if a sensor is connected only if it reported the last measurement in the last half hour
+                                for (var i = 0; i < sensors.length; i++) {
+                                  var lastMeasurement = DateTime.parse(
+                                      snapshot.data!['Sensors'][sensors[i]]
+                                          ['current_measurement']['time']);
+
+                                  if (lastMeasurement.isAfter(DateTime.now()
+                                      .add(const Duration(minutes: 30)))) {
+                                    availableSensor.remove(sensors[i]);
+                                  }
+                                }
                                 return Center(
                                   child: Text(
-                                    '3 connected',
+                                    '${availableSensor.length} connected',
                                     style: TextStyle(
-                                      color: ThemeColors().pink,
+                                      color: ThemeColors().main,
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -171,38 +188,65 @@ class _HomePageState extends State<HomePage> {
                       height: 20,
                     ),
                     //In progress Stream bulder.
-                    SizedBox(
-                      height: 400,
-                      child: StreamBuilder(
-                        stream: FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(_auth.currentUser!.uid)
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData) {
-                            return Container();
-                          } else {
-                            return ListView.builder(
-                              itemCount: 3,
-                              physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              itemBuilder: ((context, index) {
-                                var a = DateTime.parse(snapshot.data!['Sensors']
-                                        [sensors[index]]
-                                        ['current_measurement']['time']
-                                    .toString());
-                                var time = DateFormat('dd/MM/yyyy HH:mm').format(a);
-                                return CustomContainer(
-                                  title: getSensorTitle(sensors[index]),
-                                  measurement: snapshot.data!['Sensors']
-                                        [sensors[index]]
+                    Center(
+                      child: SizedBox(
+                        height: 180,
+                        child: StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(_auth.currentUser!.uid)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return Container();
+                            } else {
+                              return ListView.builder(
+                                itemCount: sensors.length,
+                                physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: ((context, index) {
+                                  var a = DateTime.parse(snapshot
+                                      .data!['Sensors'][sensors[index]]
+                                          ['current_measurement']['time']
+                                      .toString());
+                                  var time =
+                                      DateFormat('dd/MM/yyyy HH:mm').format(a);
+                                  return CustomContainer(
+                                    title: getSensorTitle(sensors[index]),
+                                    measurement: snapshot.data!['Sensors']
+                                            [sensors[index]]
                                         ['current_measurement']['measurement'],
-                                  createDate: time,
-                                );
-                              }),
-                            );
-                          }
-                        },
+                                    createDate: time,
+                                  );
+                                }),
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Center(
+                      child: SizedBox(
+                        height: 200,
+                        child: StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(_auth.currentUser!.uid)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return Container();
+                            } else {
+                              return CustomNotification(
+                                notifications: snapshot.data!['notifications'],
+                                count: 3,
+                              );
+                            }
+                          },
+                        ),
                       ),
                     ),
                   ],

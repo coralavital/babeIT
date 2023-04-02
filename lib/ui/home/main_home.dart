@@ -18,7 +18,7 @@ class _MainHomeState extends State<MainHome> {
   int currentPage = 0;
   final List _pages = [
     HomePage(),
-    ProjectsList(),
+    HistoryList(),
     SettingsPage(),
   ];
   void tappedPage(int index) {
@@ -31,7 +31,6 @@ class _MainHomeState extends State<MainHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[currentPage],
-      backgroundColor: Color.fromARGB(255, 21, 21, 37),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(
           left: 15,
@@ -45,7 +44,7 @@ class _MainHomeState extends State<MainHome> {
             child: BottomNavigationBar(
               showSelectedLabels: false,
               showUnselectedLabels: false,
-              backgroundColor: ThemeColors().grey.withOpacity(1),
+              backgroundColor: ThemeColors().grey,
               currentIndex: currentPage,
               type: BottomNavigationBarType.fixed,
               onTap: tappedPage,
@@ -53,7 +52,7 @@ class _MainHomeState extends State<MainHome> {
                 BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     'assets/icons/home.svg',
-                    color: ThemeColors().purpleAccent,
+                    color: ThemeColors().welcome,
                     fit: BoxFit.none,
                   ),
                   activeIcon: SvgPicture.asset(
@@ -64,30 +63,14 @@ class _MainHomeState extends State<MainHome> {
                   label: 'H',
                 ),
                 BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    'assets/icons/projects.svg',
-                    color: ThemeColors().purpleAccent,
-                    fit: BoxFit.none,
-                  ),
-                  activeIcon: SvgPicture.asset(
-                    'assets/icons/projects_active.svg',
-                    color: ThemeColors().blue,
-                    fit: BoxFit.none,
-                  ),
+                  icon: Icon(Icons.history_sharp, color: ThemeColors().welcome,),
+                  activeIcon: Icon(Icons.history_sharp, color: ThemeColors().blue,),
                   label: 'P',
                 ),
                 
                 BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    'assets/icons/settings.svg',
-                    color: ThemeColors().purpleAccent,
-                    fit: BoxFit.none,
-                  ),
-                  activeIcon: SvgPicture.asset(
-                    'assets/icons/settings_active.svg',
-                    color: ThemeColors().blue,
-                    fit: BoxFit.none,
-                  ),
+                  icon: Icon(Icons.person, color: ThemeColors().welcome,),
+                  activeIcon: Icon(Icons.person, color: ThemeColors().blue,),
                   label: 'S',
                 ),
               ],

@@ -3,14 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:babe_it/widgets/list_container.dart';
 
-class ProjectsList extends StatefulWidget {
-  const ProjectsList({super.key});
+class HistoryList extends StatefulWidget {
+  const HistoryList({super.key});
 
   @override
-  State<ProjectsList> createState() => _ProjectsListState();
+  State<HistoryList> createState() => _HistoryList();
 }
 
-class _ProjectsListState extends State<ProjectsList> {
+class _HistoryList extends State<HistoryList> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -72,8 +72,8 @@ class _ProjectsListState extends State<ProjectsList> {
                       return Container();
                     } else {
                       return ListView.builder(
-                        itemCount: 3,
-                        physics: BouncingScrollPhysics(),
+                        itemCount: sensors.length,
+                        physics: const BouncingScrollPhysics(),
                         itemBuilder: ((context, index) {
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 10),
