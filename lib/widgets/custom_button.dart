@@ -22,7 +22,7 @@ class CustomButton extends StatelessWidget {
           height: 50,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: ThemeColors().blue,
+            color: ThemeColors().main,
             borderRadius: BorderRadius.circular(15),
           ),
           child: Center(

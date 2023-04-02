@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:babe_it/theme/theme_colors.dart';
 import 'package:babe_it/ui/home/home.dart';
 import 'package:babe_it/ui/home/history_list.dart';
-import 'package:babe_it/ui/home/settings.dart';
+import 'package:babe_it/ui/home/account.dart';
 
 class MainHome extends StatefulWidget {
   const MainHome({super.key});
@@ -21,7 +21,7 @@ class _MainHomeState extends State<MainHome> {
     HomePage(),
     NotificationsList(),
     HistoryList(),
-    SettingsPage(),
+    ProfilePage(),
   ];
   void tappedPage(int index) {
     setState(() {
