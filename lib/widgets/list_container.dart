@@ -27,7 +27,7 @@ class ListContainer extends StatelessWidget {
       width: double.infinity,
       height: 170,
       decoration: BoxDecoration(
-        color: ThemeColors().main,
+        color: ThemeColors().grey.withOpacity(0.5),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
@@ -42,7 +42,7 @@ class ListContainer extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black38,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     overflow: TextOverflow.ellipsis,
@@ -57,7 +57,7 @@ class ListContainer extends StatelessWidget {
                       elements,
                       overflow: TextOverflow.visible,
                       style: TextStyle(
-                        color: Colors.white70,
+                        color: Colors.black38,
                         fontSize: 12,
                       ),
                     ),

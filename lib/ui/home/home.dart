@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         SizedBox(
-                          width: 10,
+                          width: 15,
                         ),
                         Container(
                           height: 20,
@@ -162,10 +162,14 @@ class _HomePageState extends State<HomePage> {
                                   var lastMeasurement = DateTime.parse(
                                       snapshot.data!['Sensors'][sensors[i]]
                                           ['current_measurement']['time']);
-
-                                  if (lastMeasurement.isAfter(DateTime.now()
+                                  if (DateTime.now().isAfter(lastMeasurement
                                       .add(const Duration(minutes: 30)))) {
                                     availableSensor.remove(sensors[i]);
+                                  } else {
+                                    if(!availableSensor.contains(sensors[i])) {
+
+                                    availableSensor.add(sensors[i]);
+                                    }
                                   }
                                 }
                                 return Center(
@@ -190,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                     //In progress Stream bulder.
                     Center(
                       child: SizedBox(
-                        height: 180,
+                        height: 140,
                         child: StreamBuilder(
                           stream: FirebaseFirestore.instance
                               .collection('users')
@@ -217,6 +221,8 @@ class _HomePageState extends State<HomePage> {
                                             [sensors[index]]
                                         ['current_measurement']['measurement'],
                                     createDate: time,
+                                    sensor: snapshot.data!['Sensors']
+                                        [sensors[index]]['current_measurement'],
                                   );
                                 }),
                               );
@@ -228,25 +234,27 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(
                       height: 20,
                     ),
-                    Center(
-                      child: SizedBox(
-                        height: 200,
-                        child: StreamBuilder(
-                          stream: FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(_auth.currentUser!.uid)
-                              .snapshots(),
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData) {
-                              return Container();
-                            } else {
-                              return CustomNotification(
-                                notifications: snapshot.data!['notifications'],
-                                count: 3,
-                              );
-                            }
-                          },
-                        ),
+                    SizedBox(
+                      height: 200,
+                      child: StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(_auth.currentUser!.uid)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Container();
+                          } else {
+                            List<dynamic> list =
+                                snapshot.data!['notifications'];
+                            return CustomNotification(
+                              notifications: list,
+                              count: 5,
+                              fontSize: 15,
+                              title: 'Notifications',
+                            );
+                          }
+                        },
                       ),
                     ),
                   ],

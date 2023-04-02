@@ -38,7 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   onPressed: () {
                     FirebaseAuth.instance.signOut();
                   },
-                  child: Icon(Icons.logout_outlined, color: Colors.amber),
+                  child: Icon(Icons.logout_outlined, color: Colors.black38),
                 ),
               ],
             ),
@@ -54,7 +54,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 User? user = FirebaseAuth.instance.currentUser;
                 user!.delete();
               },
-              child: Text('Delete Account'),
+              child: Text('Delete Account', style: TextStyle(color: Colors.black38),),
             ),
           ],
         ),

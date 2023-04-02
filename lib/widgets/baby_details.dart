@@ -18,7 +18,7 @@ class BabyDetails extends StatelessWidget {
         padding: const EdgeInsets.only(right: 10, left: 10),
         height: 450,
         width: double.infinity,
-        color: ThemeColors().grey,
+        color: ThemeColors().grey.withOpacity(0.5),
         child: Row(
           children: [
             Expanded(

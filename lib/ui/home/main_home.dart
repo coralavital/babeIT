@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:babe_it/ui/home/notification_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:babe_it/theme/theme_colors.dart';
@@ -18,6 +19,7 @@ class _MainHomeState extends State<MainHome> {
   int currentPage = 0;
   final List _pages = [
     HomePage(),
+    NotificationsList(),
     HistoryList(),
     SettingsPage(),
   ];
@@ -61,6 +63,11 @@ class _MainHomeState extends State<MainHome> {
                     fit: BoxFit.none,
                   ),
                   label: 'H',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.notifications_rounded, color: ThemeColors().welcome,),
+                  activeIcon: Icon(Icons.notifications_rounded, color: ThemeColors().blue,),
+                  label: 'N',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.history_sharp, color: ThemeColors().welcome,),
