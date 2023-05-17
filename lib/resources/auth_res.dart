@@ -6,22 +6,22 @@ class AuthRes {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<String> createAccount(
-    String name,
-    String surname,
+    String fullName,
     String email,
-    String photoUrl,
     String password,
+    List sensors,
+    List notifications,
   ) async {
     String res = 'Some error accoured';
-    if (name.isNotEmpty && email.isNotEmpty && password.isNotEmpty) {
+    if (fullName.isNotEmpty && email.isNotEmpty && password.isNotEmpty) {
       try {
         await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
-        await _firestore.collection('users').doc(_auth.currentUser!.uid).set({
-          'name': name,
-          'surname': surname,
+        await _firestore.collection(_auth.currentUser!.uid).doc('user_data').set({
+          'name': fullName,
           'email': email,
-          // 'baby_details':,
+          'sensors': sensors,
+          'notifications': notifications,
         });
         res = 'success';
       } catch (error) {

@@ -5,8 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:babe_it/theme/theme_colors.dart';
 import 'package:babe_it/widgets/custom_widget.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../theme/dimensions.dart';
 import '../../widgets/custom_notifications.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,18 +18,17 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   List? allNotifications;
-  List availableSensor = [
-    'heart_rate_sensor',
-    'infrared_sensor',
-    'sound_sensor'
-  ];
+  late AnimationController controller;
+  late Animation<double> animation;
+  List availableSensor = ['haterate_sensor', 'infrared_sensor', 'sound_sensor'];
 
   final List<String> sensors = [
-    'heart_rate_sensor',
+    'haterate_sensor',
     'infrared_sensor',
     'sound_sensor'
   ];
@@ -35,13 +36,32 @@ class _HomePageState extends State<HomePage> {
   String currentDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
 
   getSensorTitle(String sensor) {
-    if (sensor == 'heart_rate_sensor') {
+    if (sensor == 'haterate_sensor') {
       return "Hart Rate Sensor";
     } else if (sensor == 'infrared_sensor') {
       return "Infrared Sensor";
     } else {
       return 'Sound Sensor';
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    )
+      ..forward()
+      ..repeat(reverse: true);
+    animation = Tween<double>(begin: 0.0, end: 1.0).animate(controller);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -60,9 +80,9 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(_auth.currentUser!.uid)
+                  stream: _firestore
+                      .collection(_auth.currentUser!.uid)
+                      .doc('user_data')
                       .snapshots(),
                   builder: ((context, snapshot) {
                     if (!snapshot.hasData) {
@@ -149,27 +169,29 @@ class _HomePageState extends State<HomePage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: StreamBuilder(
-                            stream: FirebaseFirestore.instance
-                                .collection('users')
-                                .doc(_auth.currentUser!.uid)
+                            stream: _firestore
+                                .collection(_auth.currentUser!.uid)
+                                .doc('user_data')
                                 .snapshots(),
                             builder: (context, snapshot) {
-                              if (!snapshot.hasData) {
-                                return Container();
-                              } else {
+                              if (snapshot.data!['sensors'][0] != null) {
                                 // Shows if a sensor is connected only if it reported the last measurement in the last half hour
                                 for (var i = 0; i < sensors.length; i++) {
-                                  var lastMeasurement = DateTime.parse(
-                                      snapshot.data!['Sensors'][sensors[i]]
-                                          ['current_measurement']['time']);
-                                  if (DateTime.now().isAfter(lastMeasurement
-                                      .add(const Duration(minutes: 30)))) {
-                                    availableSensor.remove(sensors[i]);
-                                  } else {
-                                    if(!availableSensor.contains(sensors[i])) {
-
-                                    availableSensor.add(sensors[i]);
+                                  if (snapshot.data!['sensors'][i][0] != null) {
+                                    var lastMeasurement = DateTime.parse(
+                                        snapshot.data!['sensors'][i]
+                                            ['current_measurement']['time']);
+                                    if (DateTime.now().isAfter(lastMeasurement
+                                        .add(const Duration(minutes: 30)))) {
+                                      availableSensor.remove(sensors[i]);
+                                    } else {
+                                      if (!availableSensor
+                                          .contains(sensors[i])) {
+                                        availableSensor.add(sensors[i]);
+                                      }
                                     }
+                                  } else {
+                                    availableSensor = [];
                                   }
                                 }
                                 return Center(
@@ -177,11 +199,13 @@ class _HomePageState extends State<HomePage> {
                                     '${availableSensor.length} connected',
                                     style: TextStyle(
                                       color: ThemeColors().main,
-                                      fontSize: 14,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 );
+                              } else {
+                                return Container();
                               }
                             },
                           ),
@@ -189,41 +213,67 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 15,
                     ),
+
                     //In progress Stream bulder.
                     Center(
                       child: SizedBox(
                         height: 140,
                         child: StreamBuilder(
-                          stream: FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(_auth.currentUser!.uid)
+                          stream: _firestore
+                              .collection(_auth.currentUser!.uid)
+                              .doc('user_data')
                               .snapshots(),
                           builder: (context, snapshot) {
-                            if (!snapshot.hasData) {
-                              return Container();
+                            if (snapshot.data!['sensors'] == null) {
+                              return Padding(
+                                  padding: EdgeInsets.only(left: 5),
+                                  child: Column(children: [
+                                    SizedBox(
+                                      height: 70,
+                                    ),
+                                    AnimatedIcon(
+                                      icon: AnimatedIcons.list_view,
+                                      color: ThemeColors().main,
+                                      progress: animation,
+                                      size: 30,
+                                      semanticLabel: 'Loadding',
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Text(
+                                      'There is no products yet',
+                                    ),
+                                  ]));
                             } else {
                               return ListView.builder(
                                 itemCount: sensors.length,
                                 physics: BouncingScrollPhysics(),
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: ((context, index) {
-                                  var a = DateTime.parse(snapshot
-                                      .data!['Sensors'][sensors[index]]
-                                          ['current_measurement']['time']
-                                      .toString());
-                                  var time =
-                                      DateFormat('dd/MM/yyyy HH:mm').format(a);
-                                  return CustomContainer(
-                                    title: getSensorTitle(sensors[index]),
-                                    measurement: snapshot.data!['Sensors']
-                                            [sensors[index]]
-                                        ['current_measurement']['measurement'],
-                                    createDate: time,
-                                    sensor: snapshot.data!['Sensors']
-                                        [sensors[index]]['current_measurement'],
-                                  );
+                                  if (snapshot.data!['sensors'][index][0] !=
+                                      null) {
+                                    var a = DateTime.parse(snapshot
+                                        .data!['sensors'][index][0]
+                                            ['current_measurement']['time']
+                                        .toString());
+                                    var time = DateFormat('dd/MM/yyyy HH:mm')
+                                        .format(a);
+
+                                    return CustomContainer(
+                                      title: getSensorTitle(sensors[index]),
+                                      measurement: snapshot.data!['sensors']
+                                              [index][0]['current_measurement']
+                                          ['measurement'],
+                                      createDate: time,
+                                      sensor: snapshot.data!['sensors'][index]
+                                          [0]['current_measurement'],
+                                    );
+                                  } else {
+                                    Container();
+                                  }
                                 }),
                               );
                             }
@@ -234,16 +284,45 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(
                       height: 20,
                     ),
+                    Text(
+                      'Notifications',
+                      style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+
                     SizedBox(
                       height: 200,
                       child: StreamBuilder(
-                        stream: FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(_auth.currentUser!.uid)
+                        stream: _firestore
+                            .collection(_auth.currentUser!.uid)
+                            .doc('user_data')
                             .snapshots(),
                         builder: (context, snapshot) {
-                          if (!snapshot.hasData) {
-                            return Container();
+                          if (snapshot.data!['notifications'] != null) {
+                            return Padding(
+                                padding: EdgeInsets.only(left: 5),
+                                child: Column(children: [
+                                  SizedBox(
+                                    height: 70,
+                                  ),
+                                  AnimatedIcon(
+                                    icon: AnimatedIcons.list_view,
+                                    color: ThemeColors().main,
+                                    progress: animation,
+                                    size: 30,
+                                    semanticLabel: 'Loadding',
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Text(
+                                    'There is no products yet',
+                                  ),
+                                ]));
                           } else {
                             List<dynamic> list =
                                 snapshot.data!['notifications'];
