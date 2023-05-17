@@ -1,3 +1,4 @@
+import 'package:babe_it/theme/dimensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,10 +23,10 @@ class _NotificationsList extends State<NotificationsList> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        toolbarHeight: 15,
+        toolbarHeight: Dimensions.size15,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(Dimensions.size15),
         child: Container(
           color: Colors.white,
           child: Column(
@@ -33,27 +34,27 @@ class _NotificationsList extends State<NotificationsList> {
               //Header
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   Text(
                     'Notifications',
                     style: TextStyle(
-                      fontSize: 30,
+                      fontSize: Dimensions.size30,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 25,
+              SizedBox(
+                height: Dimensions.size25,
               ),
               //Body
               Expanded(
                 child: SizedBox(
-                  height: 200,
+                  height: Dimensions.size20,
                   child: StreamBuilder(
                     stream: FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(_auth.currentUser!.uid)
+                        .collection(_auth.currentUser!.uid)
+                        .doc('user_data')
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
@@ -62,7 +63,7 @@ class _NotificationsList extends State<NotificationsList> {
                         return CustomNotification(
                           notifications: snapshot.data!['notifications'],
                           count: snapshot.data!['notifications'].length,
-                          fontSize: 15,
+                          fontSize: Dimensions.size15,
                         );
                       }
                     },

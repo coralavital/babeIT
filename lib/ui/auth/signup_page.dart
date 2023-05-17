@@ -13,6 +13,8 @@ import 'package:babe_it/widgets/custom_button.dart';
 import 'package:babe_it/widgets/custom_loader.dart';
 import 'package:babe_it/widgets/text_field.dart';
 
+import '../../theme/dimensions.dart';
+
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
 
@@ -65,7 +67,7 @@ class _SignupPageState extends State<SignupPage> {
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.red,
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: Dimensions.size15,
       );
     }
   }
@@ -94,23 +96,23 @@ class _SignupPageState extends State<SignupPage> {
               Text(
                 'Welcome',
                 style: TextStyle(
-                  fontSize: 25,
+                  fontSize: Dimensions.size25,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: Dimensions.size20,
               ),
               Text(
                 'Create account to continue...',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: Dimensions.size15,
                   color: Colors.grey,
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: Dimensions.size20,
               ),
               TextFieldWidget(
                 controller: _fullName,
@@ -137,7 +139,7 @@ class _SignupPageState extends State<SignupPage> {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: Dimensions.size20,
               ),
               CustomButton(
                 text: 'Create Account',
@@ -147,7 +149,7 @@ class _SignupPageState extends State<SignupPage> {
                 },
               ),
               SizedBox(
-                height: 20,
+                height: Dimensions.size20,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -165,7 +167,7 @@ class _SignupPageState extends State<SignupPage> {
                         'OR',
                         style: TextStyle(
                           color: Colors.grey,
-                          fontSize: 14,
+                          fontSize: Dimensions.size15,
                         ),
                       ),
                     ),
@@ -179,14 +181,14 @@ class _SignupPageState extends State<SignupPage> {
                 ),
               ),
               SizedBox(
-                height: 15,
+                height: Dimensions.size15,
               ),
               GestureDetector(
                 onTap: () {
                   Navigator.pop(context);
                 },
                 child: Container(
-                  height: 50,
+                  height: Dimensions.size50,
                   width: double.infinity,
                   color: Colors.transparent,
                   child: Center(

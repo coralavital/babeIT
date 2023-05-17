@@ -1,13 +1,13 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously, prefer_const_literals_to_create_immutables
 
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:babe_it/ui/home/main_home.dart';
+import 'package:babe_it/services/firestore_service.dart';
+import 'package:babe_it/theme/dimensions.dart';
 import 'package:babe_it/widgets/custom_button.dart';
 import 'package:babe_it/widgets/custom_loader.dart';
 import 'package:babe_it/widgets/text_field.dart';
-import 'package:babe_it/services/firestore_service.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:babe_it/ui/home/main_home.dart';
+import 'package:flutter/material.dart';
 
 class BabyInfoPage extends StatefulWidget {
   const BabyInfoPage({super.key});
@@ -64,7 +64,7 @@ class _BabyInfoPage extends State<BabyInfoPage> {
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.red,
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: Dimensions.size15,
       );
     }
   }
@@ -95,23 +95,23 @@ class _BabyInfoPage extends State<BabyInfoPage> {
               Text(
                 'Baby Information',
                 style: TextStyle(
-                  fontSize: 25,
+                  fontSize: Dimensions.size25,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: Dimensions.size20,
               ),
               Text(
                 'We need the information about your baby\nso that we can diagnose accurately and quickly.',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: Dimensions.size15,
                   color: Colors.grey,
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: Dimensions.size20,
               ),
               DropdownButton(
                   value: selectedValue,
@@ -139,7 +139,7 @@ class _BabyInfoPage extends State<BabyInfoPage> {
                   hintText: 'Width',
                   prefixIcon: Icon(Icons.width_full_outlined)),
               SizedBox(
-                height: 20,
+                height: Dimensions.size20,
               ),
               CustomButton(
                 text: 'Continue',
@@ -149,7 +149,7 @@ class _BabyInfoPage extends State<BabyInfoPage> {
                 },
               ),
               SizedBox(
-                height: 20,
+                height: Dimensions.size20,
               ),
             ],
           ),

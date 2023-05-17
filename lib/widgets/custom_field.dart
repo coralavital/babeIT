@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../theme/dimensions.dart';
+
 class MyTextField extends StatelessWidget {
   MyTextField({
     super.key,
@@ -22,25 +24,19 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      const SizedBox(
-        height: 10,
+       SizedBox(
+        height: Dimensions.size10,
       ),
       Text(fieldTitle),
-      const SizedBox(
-        height: 10,
+       SizedBox(
+        height: Dimensions.size10,
       ),
       TextFormField(
-        // onEditingComplete: () {
-        //   if (double.tryParse(value!) != null) {
-        //     print('llllllllllllllllllllllll');
-        //   }
-        // },
         controller: myController,
         decoration: InputDecoration(
             labelText: fieldName,
-            // prefixIcon: Icon(myIcon, color: prefixIconColor),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30.0),
+              borderRadius: BorderRadius.circular(Dimensions.size30),
             ),)
       )
     ]);

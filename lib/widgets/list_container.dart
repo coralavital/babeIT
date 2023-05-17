@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:babe_it/theme/theme_colors.dart';
 
+import '../theme/dimensions.dart';
+
 class ListContainer extends StatelessWidget {
   final String title;
   List<dynamic> elementList;
@@ -23,12 +25,12 @@ class ListContainer extends StatelessWidget {
           '${elementList[i]['time']} - ${elementList[i]['measurement']}\n';
     }
     return Container(
-      padding: EdgeInsets.only(left: 10),
+      padding: EdgeInsets.only(left: Dimensions.size10),
       width: double.infinity,
-      height: 170,
+      height: Dimensions.size170,
       decoration: BoxDecoration(
         color: ThemeColors().grey.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(Dimensions.size20),
       ),
       child: Row(
         children: [
@@ -37,13 +39,13 @@ class ListContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 15,
+                  height: Dimensions.size15,
                 ),
                 Text(
                   title,
                   style: TextStyle(
                     color: Colors.black38,
-                    fontSize: 20,
+                    fontSize: Dimensions.size20,
                     fontWeight: FontWeight.bold,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -52,13 +54,13 @@ class ListContainer extends StatelessWidget {
                     child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Padding(
-                    padding: const EdgeInsets.only(right: 5),
+                    padding: EdgeInsets.only(right: Dimensions.size5),
                     child: Text(
                       elements,
                       overflow: TextOverflow.visible,
                       style: TextStyle(
                         color: Colors.black38,
-                        fontSize: 12,
+                        fontSize: Dimensions.size13,
                       ),
                     ),
                   ),

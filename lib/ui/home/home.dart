@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage>
                       return Text(
                         'Hello, ${snapshot.data!.get('name')}',
                         style: TextStyle(
-                            fontSize: 25,
+                            fontSize: Dimensions.size25,
                             fontWeight: FontWeight.bold,
                             color: ThemeColors().welcome),
                       );
@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage>
               ],
             ),
             SizedBox(
-              height: 25,
+              height: Dimensions.size25,
             ),
             //Body layout.
             Expanded(
@@ -111,12 +111,12 @@ class _HomePageState extends State<HomePage>
                   children: [
                     //Blue top card.
                     Container(
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.all(Dimensions.size20),
                       decoration: BoxDecoration(
                         color: ThemeColors().grey,
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(Dimensions.size25),
                       ),
-                      height: 115,
+                      height: Dimensions.size120,
                       width: double.infinity,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -125,17 +125,17 @@ class _HomePageState extends State<HomePage>
                             'Today',
                             style: TextStyle(
                               color: Colors.black54,
-                              fontSize: 16,
+                              fontSize: Dimensions.size15,
                             ),
                           ),
                           SizedBox(
-                            height: 5,
+                            height: Dimensions.size5,
                           ),
                           Text(
                             currentDate,
                             style: TextStyle(
                               color: Colors.black54,
-                              fontSize: 30,
+                              fontSize: Dimensions.size30,
                               fontWeight: FontWeight.bold,
                             ),
                             textAlign: TextAlign.center,
@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage>
                       ),
                     ),
                     SizedBox(
-                      height: 25,
+                      height: Dimensions.size25,
                     ),
                     //In progress section.
                     Row(
@@ -154,19 +154,19 @@ class _HomePageState extends State<HomePage>
                           'Sensor Indicators',
                           style: TextStyle(
                             color: Colors.black54,
-                            fontSize: 16,
+                            fontSize: Dimensions.size15,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         SizedBox(
-                          width: 15,
+                          width: Dimensions.size20,
                         ),
                         Container(
-                          height: 20,
-                          width: 120,
+                          height: Dimensions.size20,
+                          width: Dimensions.size120,
                           decoration: BoxDecoration(
                             color: ThemeColors().grey.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(Dimensions.size10),
                           ),
                           child: StreamBuilder(
                             stream: _firestore
@@ -174,7 +174,7 @@ class _HomePageState extends State<HomePage>
                                 .doc('user_data')
                                 .snapshots(),
                             builder: (context, snapshot) {
-                              if (snapshot.data!['sensors'][0] != null) {
+                              if (!snapshot.hasData) {
                                 // Shows if a sensor is connected only if it reported the last measurement in the last half hour
                                 for (var i = 0; i < sensors.length; i++) {
                                   if (snapshot.data!['sensors'][i][0] != null) {
@@ -199,7 +199,7 @@ class _HomePageState extends State<HomePage>
                                     '${availableSensor.length} connected',
                                     style: TextStyle(
                                       color: ThemeColors().main,
-                                      fontSize: 15,
+                                      fontSize: Dimensions.size15,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -213,35 +213,35 @@ class _HomePageState extends State<HomePage>
                       ],
                     ),
                     SizedBox(
-                      height: 15,
+                      height: Dimensions.size15,
                     ),
 
                     //In progress Stream bulder.
                     Center(
                       child: SizedBox(
-                        height: 140,
+                        height: Dimensions.size140,
                         child: StreamBuilder(
                           stream: _firestore
                               .collection(_auth.currentUser!.uid)
                               .doc('user_data')
                               .snapshots(),
                           builder: (context, snapshot) {
-                            if (snapshot.data!['sensors'] == null) {
+                            if (!snapshot.hasData) {
                               return Padding(
-                                  padding: EdgeInsets.only(left: 5),
+                                  padding: EdgeInsets.only(left: Dimensions.size5),
                                   child: Column(children: [
                                     SizedBox(
-                                      height: 70,
+                                      height: Dimensions.size70,
                                     ),
                                     AnimatedIcon(
                                       icon: AnimatedIcons.list_view,
                                       color: ThemeColors().main,
                                       progress: animation,
-                                      size: 30,
+                                      size: Dimensions.size30,
                                       semanticLabel: 'Loadding',
                                     ),
                                     SizedBox(
-                                      height: 15,
+                                      height: Dimensions.size15,
                                     ),
                                     Text(
                                       'There is no products yet',
@@ -253,8 +253,7 @@ class _HomePageState extends State<HomePage>
                                 physics: BouncingScrollPhysics(),
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: ((context, index) {
-                                  if (snapshot.data!['sensors'][index][0] !=
-                                      null) {
+                                  if (!snapshot.hasData) {
                                     var a = DateTime.parse(snapshot
                                         .data!['sensors'][index][0]
                                             ['current_measurement']['time']
@@ -282,20 +281,20 @@ class _HomePageState extends State<HomePage>
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: Dimensions.size20,
                     ),
                     Text(
                       'Notifications',
                       style: TextStyle(
                         color: Colors.black54,
-                        fontSize: 16,
+                        fontSize: Dimensions.size15,
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.start,
                     ),
 
                     SizedBox(
-                      height: 200,
+                      height: Dimensions.size200,
                       child: StreamBuilder(
                         stream: _firestore
                             .collection(_auth.currentUser!.uid)
@@ -304,20 +303,20 @@ class _HomePageState extends State<HomePage>
                         builder: (context, snapshot) {
                           if (snapshot.data!['notifications'] != null) {
                             return Padding(
-                                padding: EdgeInsets.only(left: 5),
+                                padding: EdgeInsets.only(left: Dimensions.size5),
                                 child: Column(children: [
                                   SizedBox(
-                                    height: 70,
+                                    height: Dimensions.size70,
                                   ),
                                   AnimatedIcon(
                                     icon: AnimatedIcons.list_view,
                                     color: ThemeColors().main,
                                     progress: animation,
-                                    size: 30,
+                                    size: Dimensions.size30,
                                     semanticLabel: 'Loadding',
                                   ),
                                   SizedBox(
-                                    height: 15,
+                                    height: Dimensions.size15,
                                   ),
                                   Text(
                                     'There is no products yet',
@@ -329,7 +328,7 @@ class _HomePageState extends State<HomePage>
                             return CustomNotification(
                               notifications: list,
                               count: 5,
-                              fontSize: 15,
+                              fontSize: Dimensions.size15,
                               title: 'Notifications',
                             );
                           }

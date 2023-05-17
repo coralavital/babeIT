@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:babe_it/theme/theme_colors.dart';
 
+import '../theme/dimensions.dart';
+
 class CustomLoader {
   static CustomLoader? _customLoader;
 
@@ -22,7 +24,7 @@ class CustomLoader {
   _buildLoader() {
     _overlayEntry = OverlayEntry(
       builder: (context) {
-        return SizedBox(height: 30, width: 30, child: buildLoader(context));
+        return SizedBox(height: Dimensions.size30, width: Dimensions.size30, child: buildLoader(context));
       },
     );
   }
@@ -46,8 +48,8 @@ class CustomLoader {
     backgroundColor ??= const Color(0xffa8a8a8).withOpacity(.5);
 
     return CustomScreenLoader(
-      height: 20,
-      width: 20,
+      height: Dimensions.size20,
+      width: Dimensions.size20,
       backgroundColor: backgroundColor,
     );
   }
@@ -73,19 +75,19 @@ class CustomScreenLoader extends StatelessWidget {
         width: height,
         alignment: Alignment.center,
         child: Container(
-          padding: const EdgeInsets.all(30),
-          decoration: const BoxDecoration(
+          padding: EdgeInsets.all(Dimensions.size30),
+          decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.all(
-              Radius.circular(15),
+              Radius.circular(Dimensions.size15),
             ),
           ),
           child: Stack(
             alignment: Alignment.center,
             children: <Widget>[
               SizedBox(
-                height: 30,
-                width: 30,
+                height: Dimensions.size30,
+                width: Dimensions.size30,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
                   color: ThemeColors().blue,

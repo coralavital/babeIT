@@ -52,6 +52,8 @@ dependencies:
   flutter_form_builder: ^7.8.0
   babstrap_settings_screen: ^0.1.5+1  
   get: ^4.6.5
+  firebase_messaging: ^14.4.0
+  flutter_local_notifications: ^9.2.0
 
 dev_dependencies:
   flutter_test:

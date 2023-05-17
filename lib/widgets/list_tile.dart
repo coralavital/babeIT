@@ -5,6 +5,8 @@ import 'package:badges/src/badge.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:babe_it/theme/theme_colors.dart';
 
+import '../theme/dimensions.dart';
+
 class ListTileWidget extends StatelessWidget {
   final String title;
   final String lastMessage;
@@ -22,15 +24,15 @@ class ListTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 15),
+      padding: EdgeInsets.only(right: Dimensions.size15),
       child: ListTile(
         onTap: onTap,
         leading: Container(
-          height: 50,
-          width: 50,
+          height: Dimensions.size50,
+          width: Dimensions.size50,
           decoration: BoxDecoration(
             color: ThemeColors().blue,
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(Dimensions.size15),
             image: DecorationImage(
               fit: BoxFit.cover,
               image: NetworkImage(appLogoUrl),
