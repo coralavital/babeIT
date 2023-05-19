@@ -8,8 +8,6 @@ import 'package:babe_it/widgets/custom_button.dart';
 import 'package:babe_it/widgets/custom_loader.dart';
 import 'package:babe_it/widgets/text_field.dart';
 
-import '../../theme/dimensions.dart';
-
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
 
@@ -40,7 +38,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.green,
         textColor: Colors.white,
-        fontSize: Dimensions.size15,
+        fontSize: 16.0,
       );
     } else {
       _loader.hideLoader();
@@ -51,7 +49,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.red,
         textColor: Colors.white,
-        fontSize: Dimensions.size15,
+        fontSize: 16.0,
       );
     }
   }
@@ -80,23 +78,23 @@ class _ResetPasswordState extends State<ResetPassword> {
               Text(
                 'Forgot Password',
                 style: TextStyle(
-                  fontSize: Dimensions.size25,
+                  fontSize: 25,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
               SizedBox(
-                height: Dimensions.size20,
+                height: 20,
               ),
               Text(
                 'Enter your email to reset password',
                 style: TextStyle(
-                  fontSize: Dimensions.size15,
+                  fontSize: 16,
                   color: Colors.grey,
                 ),
               ),
               SizedBox(
-                height: Dimensions.size20,
+                height: 20,
               ),
               TextFieldWidget(
                 controller: _email,
@@ -107,7 +105,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                 ),
               ),
               SizedBox(
-                height: Dimensions.size20,
+                height: 20,
               ),
               CustomButton(
                 text: 'Reset password',

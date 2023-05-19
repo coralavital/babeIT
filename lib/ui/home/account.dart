@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../theme/dimensions.dart';
 import '../../widgets/dialog.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -25,19 +24,19 @@ class _ProfilePage extends State<ProfilePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        toolbarHeight: Dimensions.size15,
+        toolbarHeight: 15,
       ),
       body: StreamBuilder(
         stream: _firestore
-            .collection(_auth.currentUser!.uid)
-            .doc('user_data')
+            .collection('users')
+            .doc(_auth.currentUser!.uid)
             .snapshots(),
         builder: ((context, snapshot) {
           if (!snapshot.hasData) {
             return Container();
           } else {
             return Padding(
-                padding: EdgeInsets.all(Dimensions.size15),
+                padding: const EdgeInsets.all(15.0),
                 child: ListView(
                   children: [
                     Row(
@@ -46,27 +45,28 @@ class _ProfilePage extends State<ProfilePage> {
                         Text(
                           'Account',
                           style: TextStyle(
-                            fontSize: Dimensions.size30,
+                            fontSize: 30,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: Dimensions.size10,
+                      height: 10,
                     ),
                     SettingsGroup(
                       items: [
                         SettingsItem(
                           onTap: () {
+                            // BabyDialog();
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
                                   return BabyDialog(
-                                    title: '${snapshot.data!['baby_information']['name']}',
-                                    message: [snapshot.data!['baby_information'].toString(),snapshot.data!['baby_information'].toString(), snapshot.data!['baby_information'].toString()],
+                                    title: '${snapshot.data!['baby_details']['name']}',
+                                    message: [snapshot.data!['baby_details']['age'].toString(),snapshot.data!['baby_details']['height'].toString(), snapshot.data!['baby_details']['weight'].toString()],
                                     detailType: ['Age', 'Height', 'Weight'],
-                                    iconPath: snapshot.data!['baby_information']['baby_icon'],
+                                    iconPath: snapshot.data!['baby_details']['baby_icon'],
                                   );
                                 });
                           },

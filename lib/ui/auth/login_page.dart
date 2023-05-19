@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:babe_it/resources/auth_res.dart';
+import 'package:babe_it/theme/theme_colors.dart';
 import 'package:babe_it/ui/auth/reset_password.dart';
 import 'package:babe_it/ui/auth/signup_page.dart';
 import 'package:babe_it/ui/home/main_home.dart';
 import 'package:babe_it/widgets/custom_button.dart';
 import 'package:babe_it/widgets/custom_loader.dart';
 import 'package:babe_it/widgets/text_field.dart';
-import '../../theme/dimensions.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.red,
         textColor: Colors.white,
-        fontSize: Dimensions.size15,
+        fontSize: 16.0,
       );
     }
   }
@@ -76,23 +76,23 @@ class _LoginPageState extends State<LoginPage> {
               Text(
                 'Welcome back',
                 style: TextStyle(
-                  fontSize: Dimensions.size25,
+                  fontSize: 25,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
               SizedBox(
-                height: Dimensions.size20,
+                height: 20,
               ),
               Text(
                 'Login to continue...',
                 style: TextStyle(
-                  fontSize: Dimensions.size15,
+                  fontSize: 16,
                   color: Colors.grey,
                 ),
               ),
               SizedBox(
-                height: Dimensions.size20,
+                height: 20,
               ),
               TextFieldWidget(
                 controller: _email,
@@ -111,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               SizedBox(
-                height: Dimensions.size20,
+                height: 20,
               ),
               CustomButton(
                 text: 'Login',
@@ -121,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
               SizedBox(
-                height: Dimensions.size20,
+                height: 20,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -134,12 +134,12 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: Dimensions.size5, right: Dimensions.size5),
+                      padding: const EdgeInsets.only(left: 5, right: 5),
                       child: Text(
                         'OR',
                         style: TextStyle(
                           color: Colors.grey,
-                          fontSize: Dimensions.size15,
+                          fontSize: 14,
                         ),
                       ),
                     ),
@@ -153,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               SizedBox(
-                height: Dimensions.size15,
+                height: 15,
               ),
               GestureDetector(
                 onTap: () {
@@ -164,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
                       ));
                 },
                 child: Container(
-                  height: Dimensions.size50,
+                  height: 50,
                   width: double.infinity,
                   color: Colors.transparent,
                   child: Center(
@@ -173,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               SizedBox(
-                height: Dimensions.size15,
+                height: 15,
               ),
               GestureDetector(
                 onTap: () {
@@ -184,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                       ));
                 },
                 child: Container(
-                  height: Dimensions.size50,
+                  height: 50,
                   width: double.infinity,
                   color: Colors.transparent,
                   child: Center(

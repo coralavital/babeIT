@@ -5,10 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:babe_it/theme/theme_colors.dart';
 import 'package:babe_it/widgets/custom_widget.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../../theme/dimensions.dart';
 import '../../widgets/custom_notifications.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,17 +16,18 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   List? allNotifications;
-  late AnimationController controller;
-  late Animation<double> animation;
-  List availableSensor = ['haterate_sensor', 'infrared_sensor', 'sound_sensor'];
+  List availableSensor = [
+    'heart_rate_sensor',
+    'infrared_sensor',
+    'sound_sensor'
+  ];
 
   final List<String> sensors = [
-    'haterate_sensor',
+    'heart_rate_sensor',
     'infrared_sensor',
     'sound_sensor'
   ];
@@ -36,32 +35,13 @@ class _HomePageState extends State<HomePage>
   String currentDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
 
   getSensorTitle(String sensor) {
-    if (sensor == 'haterate_sensor') {
+    if (sensor == 'heart_rate_sensor') {
       return "Hart Rate Sensor";
     } else if (sensor == 'infrared_sensor') {
       return "Infrared Sensor";
     } else {
       return 'Sound Sensor';
     }
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 5),
-    )
-      ..forward()
-      ..repeat(reverse: true);
-    animation = Tween<double>(begin: 0.0, end: 1.0).animate(controller);
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -80,9 +60,9 @@ class _HomePageState extends State<HomePage>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 StreamBuilder(
-                  stream: _firestore
-                      .collection(_auth.currentUser!.uid)
-                      .doc('user_data')
+                  stream: FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(_auth.currentUser!.uid)
                       .snapshots(),
                   builder: ((context, snapshot) {
                     if (!snapshot.hasData) {
@@ -91,7 +71,7 @@ class _HomePageState extends State<HomePage>
                       return Text(
                         'Hello, ${snapshot.data!.get('name')}',
                         style: TextStyle(
-                            fontSize: Dimensions.size25,
+                            fontSize: 25,
                             fontWeight: FontWeight.bold,
                             color: ThemeColors().welcome),
                       );
@@ -101,7 +81,7 @@ class _HomePageState extends State<HomePage>
               ],
             ),
             SizedBox(
-              height: Dimensions.size25,
+              height: 25,
             ),
             //Body layout.
             Expanded(
@@ -111,12 +91,12 @@ class _HomePageState extends State<HomePage>
                   children: [
                     //Blue top card.
                     Container(
-                      padding: EdgeInsets.all(Dimensions.size20),
+                      padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: ThemeColors().grey,
-                        borderRadius: BorderRadius.circular(Dimensions.size25),
+                        borderRadius: BorderRadius.circular(25),
                       ),
-                      height: Dimensions.size120,
+                      height: 115,
                       width: double.infinity,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -125,17 +105,17 @@ class _HomePageState extends State<HomePage>
                             'Today',
                             style: TextStyle(
                               color: Colors.black54,
-                              fontSize: Dimensions.size15,
+                              fontSize: 16,
                             ),
                           ),
                           SizedBox(
-                            height: Dimensions.size5,
+                            height: 5,
                           ),
                           Text(
                             currentDate,
                             style: TextStyle(
                               color: Colors.black54,
-                              fontSize: Dimensions.size30,
+                              fontSize: 30,
                               fontWeight: FontWeight.bold,
                             ),
                             textAlign: TextAlign.center,
@@ -144,7 +124,7 @@ class _HomePageState extends State<HomePage>
                       ),
                     ),
                     SizedBox(
-                      height: Dimensions.size25,
+                      height: 25,
                     ),
                     //In progress section.
                     Row(
@@ -154,44 +134,42 @@ class _HomePageState extends State<HomePage>
                           'Sensor Indicators',
                           style: TextStyle(
                             color: Colors.black54,
-                            fontSize: Dimensions.size15,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         SizedBox(
-                          width: Dimensions.size20,
+                          width: 15,
                         ),
                         Container(
-                          height: Dimensions.size20,
-                          width: Dimensions.size120,
+                          height: 20,
+                          width: 120,
                           decoration: BoxDecoration(
                             color: ThemeColors().grey.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(Dimensions.size10),
+                            borderRadius: BorderRadius.circular(10),
                           ),
                           child: StreamBuilder(
-                            stream: _firestore
-                                .collection(_auth.currentUser!.uid)
-                                .doc('user_data')
+                            stream: FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(_auth.currentUser!.uid)
                                 .snapshots(),
                             builder: (context, snapshot) {
                               if (!snapshot.hasData) {
+                                return Container();
+                              } else {
                                 // Shows if a sensor is connected only if it reported the last measurement in the last half hour
                                 for (var i = 0; i < sensors.length; i++) {
-                                  if (snapshot.data!['sensors'][i][0] != null) {
-                                    var lastMeasurement = DateTime.parse(
-                                        snapshot.data!['sensors'][i]
-                                            ['current_measurement']['time']);
-                                    if (DateTime.now().isAfter(lastMeasurement
-                                        .add(const Duration(minutes: 30)))) {
-                                      availableSensor.remove(sensors[i]);
-                                    } else {
-                                      if (!availableSensor
-                                          .contains(sensors[i])) {
-                                        availableSensor.add(sensors[i]);
-                                      }
-                                    }
+                                  var lastMeasurement = DateTime.parse(
+                                      snapshot.data!['Sensors'][sensors[i]]
+                                          ['current_measurement']['time']);
+                                  if (DateTime.now().isAfter(lastMeasurement
+                                      .add(const Duration(minutes: 30)))) {
+                                    availableSensor.remove(sensors[i]);
                                   } else {
-                                    availableSensor = [];
+                                    if(!availableSensor.contains(sensors[i])) {
+
+                                    availableSensor.add(sensors[i]);
+                                    }
                                   }
                                 }
                                 return Center(
@@ -199,13 +177,11 @@ class _HomePageState extends State<HomePage>
                                     '${availableSensor.length} connected',
                                     style: TextStyle(
                                       color: ThemeColors().main,
-                                      fontSize: Dimensions.size15,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 );
-                              } else {
-                                return Container();
                               }
                             },
                           ),
@@ -213,66 +189,41 @@ class _HomePageState extends State<HomePage>
                       ],
                     ),
                     SizedBox(
-                      height: Dimensions.size15,
+                      height: 20,
                     ),
-
                     //In progress Stream bulder.
                     Center(
                       child: SizedBox(
-                        height: Dimensions.size140,
+                        height: 140,
                         child: StreamBuilder(
-                          stream: _firestore
-                              .collection(_auth.currentUser!.uid)
-                              .doc('user_data')
+                          stream: FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(_auth.currentUser!.uid)
                               .snapshots(),
                           builder: (context, snapshot) {
                             if (!snapshot.hasData) {
-                              return Padding(
-                                  padding: EdgeInsets.only(left: Dimensions.size5),
-                                  child: Column(children: [
-                                    SizedBox(
-                                      height: Dimensions.size70,
-                                    ),
-                                    AnimatedIcon(
-                                      icon: AnimatedIcons.list_view,
-                                      color: ThemeColors().main,
-                                      progress: animation,
-                                      size: Dimensions.size30,
-                                      semanticLabel: 'Loadding',
-                                    ),
-                                    SizedBox(
-                                      height: Dimensions.size15,
-                                    ),
-                                    Text(
-                                      'There is no products yet',
-                                    ),
-                                  ]));
+                              return Container();
                             } else {
                               return ListView.builder(
                                 itemCount: sensors.length,
                                 physics: BouncingScrollPhysics(),
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: ((context, index) {
-                                  if (!snapshot.hasData) {
-                                    var a = DateTime.parse(snapshot
-                                        .data!['sensors'][index][0]
-                                            ['current_measurement']['time']
-                                        .toString());
-                                    var time = DateFormat('dd/MM/yyyy HH:mm')
-                                        .format(a);
-
-                                    return CustomContainer(
-                                      title: getSensorTitle(sensors[index]),
-                                      measurement: snapshot.data!['sensors']
-                                              [index][0]['current_measurement']
-                                          ['measurement'],
-                                      createDate: time,
-                                      sensor: snapshot.data!['sensors'][index]
-                                          [0]['current_measurement'],
-                                    );
-                                  } else {
-                                    Container();
-                                  }
+                                  var a = DateTime.parse(snapshot
+                                      .data!['Sensors'][sensors[index]]
+                                          ['current_measurement']['time']
+                                      .toString());
+                                  var time =
+                                      DateFormat('dd/MM/yyyy HH:mm').format(a);
+                                  return CustomContainer(
+                                    title: getSensorTitle(sensors[index]),
+                                    measurement: snapshot.data!['Sensors']
+                                            [sensors[index]]
+                                        ['current_measurement']['measurement'],
+                                    createDate: time,
+                                    sensor: snapshot.data!['Sensors']
+                                        [sensors[index]]['current_measurement'],
+                                  );
                                 }),
                               );
                             }
@@ -281,54 +232,25 @@ class _HomePageState extends State<HomePage>
                       ),
                     ),
                     SizedBox(
-                      height: Dimensions.size20,
+                      height: 20,
                     ),
-                    Text(
-                      'Notifications',
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: Dimensions.size15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.start,
-                    ),
-
                     SizedBox(
-                      height: Dimensions.size200,
+                      height: 200,
                       child: StreamBuilder(
-                        stream: _firestore
-                            .collection(_auth.currentUser!.uid)
-                            .doc('user_data')
+                        stream: FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(_auth.currentUser!.uid)
                             .snapshots(),
                         builder: (context, snapshot) {
-                          if (snapshot.data!['notifications'] != null) {
-                            return Padding(
-                                padding: EdgeInsets.only(left: Dimensions.size5),
-                                child: Column(children: [
-                                  SizedBox(
-                                    height: Dimensions.size70,
-                                  ),
-                                  AnimatedIcon(
-                                    icon: AnimatedIcons.list_view,
-                                    color: ThemeColors().main,
-                                    progress: animation,
-                                    size: Dimensions.size30,
-                                    semanticLabel: 'Loadding',
-                                  ),
-                                  SizedBox(
-                                    height: Dimensions.size15,
-                                  ),
-                                  Text(
-                                    'There is no products yet',
-                                  ),
-                                ]));
+                          if (!snapshot.hasData) {
+                            return Container();
                           } else {
                             List<dynamic> list =
                                 snapshot.data!['notifications'];
                             return CustomNotification(
                               notifications: list,
                               count: 5,
-                              fontSize: Dimensions.size15,
+                              fontSize: 15,
                               title: 'Notifications',
                             );
                           }

@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:babe_it/theme/theme_colors.dart';
 
-import '../theme/dimensions.dart';
-
 class TextFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
@@ -24,16 +22,16 @@ class TextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        left: Dimensions.size20,
-        right: Dimensions.size20,
-        top: Dimensions.size10,
+        left: 20,
+        right: 20,
+        top: 10,
       ),
       child: Container(
-        height: Dimensions.size50,
+        height: 50,
         width: double.infinity,
         decoration: BoxDecoration(
           color: ThemeColors().grey.withOpacity(0.5),
-          borderRadius: BorderRadius.circular(Dimensions.size15),
+          borderRadius: BorderRadius.circular(15),
         ),
         child: TextField(
           controller: controller,

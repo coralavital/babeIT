@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:babe_it/theme/theme_colors.dart';
 
-import '../theme/dimensions.dart';
-
 class CustomContainer extends StatefulWidget {
   final String title;
   final String measurement;
@@ -36,13 +34,13 @@ class _CustomContainerState extends State<CustomContainer> {
     }
 
     return Padding(
-      padding: EdgeInsets.only(right: Dimensions.size10, bottom: Dimensions.size10),
+      padding: const EdgeInsets.only(right: 10, bottom: 9),
       child: Container(
-        width: Dimensions.size170,
-        padding: EdgeInsets.all(Dimensions.size15),
+        width: 175,
+        padding: EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: ThemeColors().grey.withOpacity(0.5),
-          borderRadius: BorderRadius.circular(Dimensions.size20),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,50 +50,50 @@ class _CustomContainerState extends State<CustomContainer> {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                   color: Colors.black54,
-                  fontSize: Dimensions.size15,
+                  fontSize: 15,
                   fontWeight: FontWeight.bold),
             ),
             SizedBox(
-              height: Dimensions.size15,
+              height: 15,
             ),
             Text(
               widget.measurement,
               style: TextStyle(
                 overflow: TextOverflow.ellipsis,
-                fontSize: Dimensions.size20,
+                fontSize: 20,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(
-              height: Dimensions.size10,
+              height: 10,
             ),
             Row(
               children: [
                 availableSensor == true
                     ? Container(
-                        height: Dimensions.size13,
-                        width: Dimensions.size13,
+                        height: 12,
+                        width: 12,
                         decoration: BoxDecoration(
                           color: Colors.greenAccent,
                           borderRadius: BorderRadius.circular(12),
                         ),
                       )
                     : Container(
-                        height: Dimensions.size13,
-                        width: Dimensions.size13,
+                        height: 12,
+                        width: 12,
                         decoration: BoxDecoration(
                           color: Colors.redAccent,
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                 SizedBox(
-                  width: Dimensions.size5,
+                  width: 6,
                 ),
                 Text(
                   widget.createDate,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: Dimensions.size10),
+                  style: TextStyle(fontSize: 10),
                   overflow: TextOverflow.ellipsis,
                 ),
               ],

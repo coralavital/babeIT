@@ -1,8 +1,7 @@
 // ignore_for_file: prefer_const_constructors
-import 'package:babe_it/theme/theme_colors.dart';
-import 'package:flutter/material.dart';
 
-import '../theme/dimensions.dart';
+import 'package:flutter/material.dart';
+import 'package:babe_it/theme/theme_colors.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -18,9 +17,9 @@ class CustomButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: Dimensions.size20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Container(
-          height: Dimensions.size50,
+          height: 50,
           width: double.infinity,
           decoration: BoxDecoration(
             color: ThemeColors().main,
@@ -31,7 +30,7 @@ class CustomButton extends StatelessWidget {
               text,
               style: TextStyle(
                 color: Colors.black,
-                fontSize: Dimensions.size15,
+                fontSize: 16,
               ),
             ),
           ),

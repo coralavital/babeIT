@@ -3,8 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:babe_it/widgets/list_container.dart';
 
-import '../../theme/dimensions.dart';
-
 class HistoryList extends StatefulWidget {
   const HistoryList({super.key});
 
@@ -38,10 +36,10 @@ class _HistoryList extends State<HistoryList> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        toolbarHeight: Dimensions.size15,
+        toolbarHeight: 15,
       ),
       body: Padding(
-        padding: EdgeInsets.all(Dimensions.size15),
+        padding: const EdgeInsets.all(15.0),
         child: Container(
           color: Colors.white,
           child: Column(
@@ -49,25 +47,25 @@ class _HistoryList extends State<HistoryList> {
               //Header
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: const [
                   Text(
                     'History',
                     style: TextStyle(
-                      fontSize: Dimensions.size30,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
               ),
               SizedBox(
-                height: Dimensions.size25,
+                height: 25,
               ),
               //Body
               Expanded(
                 child: StreamBuilder(
                   stream: FirebaseFirestore.instance
-                      .collection(_auth.currentUser!.uid)
-                      .doc('user_data')
+                      .collection('users')
+                      .doc(_auth.currentUser!.uid)
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
@@ -78,14 +76,12 @@ class _HistoryList extends State<HistoryList> {
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: ((context, index) {
                           return Padding(
-                            padding: EdgeInsets.only(bottom: Dimensions.size10),
-                            child: 
-                                  snapshot.data!['sensors'][index]['history'] != null?
-                            ListContainer(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: ListContainer(
                               elementList:
-                                  snapshot.data!['sensors'][index]['history'],
+                                  snapshot.data!['Sensors'][sensors[index]]['history'],
                               title: getSensorTitle(sensors[index]),
-                            ): Container()
+                            ),
                           );
                         }),
                       );
