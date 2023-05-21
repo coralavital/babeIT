@@ -27,7 +27,6 @@ class FMessaging {
       sensors = querySnapshot.get("sensors");
       for (var i = 0; i < sensors!.length; i++) {
         if (sensors![sensorsList[i]]['status'] == "abnormal") {
-          print('____________________________________________________________');
           if (sensors![sensorsList[i]] == "heart_rate_sensor") {
             if (int.parse(sensors![sensorsList[i]]['current_measurement']) <
                 80) {
