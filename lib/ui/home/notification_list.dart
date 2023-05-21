@@ -51,19 +51,20 @@ class _NotificationsList extends State<NotificationsList> {
                 child: SizedBox(
                   height: 200,
                   child: StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(_auth.currentUser!.uid)
+                    stream: _firestore
+                        .collection(_auth.currentUser!.uid)
+                        .doc('user_data')
                         .snapshots(),
                     builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return Container();
-                      } else {
+                      if (snapshot.hasData) {
+                        var data = snapshot.data!['notifications'];
                         return CustomNotification(
-                          notifications: snapshot.data!['notifications'],
-                          count: snapshot.data!['notifications'].length,
+                          notifications: data,
+                          count: data.length,
                           fontSize: 15,
                         );
+                      } else {
+                        return Container();
                       }
                     },
                   ),

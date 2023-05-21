@@ -28,8 +28,8 @@ class _ProfilePage extends State<ProfilePage> {
       ),
       body: StreamBuilder(
         stream: _firestore
-            .collection('users')
-            .doc(_auth.currentUser!.uid)
+            .collection(_auth.currentUser!.uid)
+            .doc('user_data')
             .snapshots(),
         builder: ((context, snapshot) {
           if (!snapshot.hasData) {
@@ -58,15 +58,17 @@ class _ProfilePage extends State<ProfilePage> {
                       items: [
                         SettingsItem(
                           onTap: () {
-                            // BabyDialog();
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
+                                  var data = snapshot.data!['baby_information'];
+
                                   return BabyDialog(
-                                    title: '${snapshot.data!['baby_details']['name']}',
-                                    message: [snapshot.data!['baby_details']['age'].toString(),snapshot.data!['baby_details']['height'].toString(), snapshot.data!['baby_details']['weight'].toString()],
-                                    detailType: ['Age', 'Height', 'Weight'],
-                                    iconPath: snapshot.data!['baby_details']['baby_icon'],
+                                    babyName: data['name'],
+                                    babyAge: data['age'],
+                                    babyHeight: data['height'],
+                                    babyWeight: data['weight'],
+                                    babyIcon: data['baby_icon'],
                                   );
                                 });
                           },
@@ -75,7 +77,6 @@ class _ProfilePage extends State<ProfilePage> {
                             backgroundColor: Colors.purple,
                           ),
                           title: 'Baby Information',
-                          // subtitle: "Learn more about Ziar'App",
                         ),
                       ],
                     ),
@@ -84,14 +85,14 @@ class _ProfilePage extends State<ProfilePage> {
                       items: [
                         SettingsItem(
                           onTap: () {
-                            FirebaseAuth.instance.signOut();
+                            _auth.signOut();
                           },
                           icons: Icons.exit_to_app_rounded,
                           title: "Sign Out",
                         ),
                         SettingsItem(
                           onTap: () {
-                            User user = FirebaseAuth.instance.currentUser!;
+                            User user = _auth.currentUser!;
                             user.delete();
                           },
                           icons: CupertinoIcons.delete_solid,

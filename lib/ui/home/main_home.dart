@@ -8,6 +8,8 @@ import 'package:babe_it/ui/home/home.dart';
 import 'package:babe_it/ui/home/history_list.dart';
 import 'package:babe_it/ui/home/account.dart';
 
+import '../../resources/firebase_message.dart';
+
 class MainHome extends StatefulWidget {
   const MainHome({super.key});
 
@@ -17,6 +19,7 @@ class MainHome extends StatefulWidget {
 
 class _MainHomeState extends State<MainHome> {
   int currentPage = 0;
+  FMessaging messaging = FMessaging();
   final List _pages = [
     HomePage(),
     NotificationsList(),
@@ -27,6 +30,14 @@ class _MainHomeState extends State<MainHome> {
     setState(() {
       currentPage = index;
     });
+  }
+    @override
+  void initState() {
+    super.initState();
+    messaging.requestPermission();
+    messaging.getToken();
+    messaging.initInfo();
+    messaging.getChanges();
   }
 
   @override

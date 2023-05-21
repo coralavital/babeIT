@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,15 +18,12 @@ class _HistoryList extends State<HistoryList> {
 
   final List<String> sensors = [
     'heart_rate_sensor',
-    'infrared_sensor',
     'sound_sensor'
   ];
 
   getSensorTitle(String sensor) {
     if (sensor == 'heart_rate_sensor') {
       return "Hart Rate Sensor";
-    } else if (sensor == 'infrared_sensor') {
-      return "Infrared Sensor";
     } else {
       return 'Sound Sensor';
     }
@@ -63,23 +62,24 @@ class _HistoryList extends State<HistoryList> {
               //Body
               Expanded(
                 child: StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(_auth.currentUser!.uid)
+                  stream: _firestore
+                      .collection(_auth.currentUser!.uid)
+                      .doc('user_data')
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
                       return Container();
                     } else {
+                      final data = snapshot.data!['sensors'];
                       return ListView.builder(
-                        itemCount: sensors.length,
+                        itemCount: data.length,
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: ((context, index) {
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 10),
                             child: ListContainer(
-                              elementList:
-                                  snapshot.data!['Sensors'][sensors[index]]['history'],
+                              elementList: data[sensors[index]]
+                                  ['history'] ?? [],
                               title: getSensorTitle(sensors[index]),
                             ),
                           );

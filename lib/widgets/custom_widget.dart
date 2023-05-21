@@ -25,12 +25,16 @@ class _CustomContainerState extends State<CustomContainer> {
   @override
   Widget build(BuildContext context) {
     bool availableSensor = true;
-    var lastMeasurement = DateTime.parse(widget.sensor!['time']);
-    if (DateTime.now().isAfter(lastMeasurement
-                                      .add(const Duration(minutes: 30)))) {
-                                    availableSensor = false;
-                                  }else {
-      availableSensor = true;
+    if (widget.sensor!['time'] == "") {
+      
+    } else {
+      var lastMeasurement = DateTime.parse(widget.sensor!['time']);
+      if (DateTime.now()
+          .isAfter(lastMeasurement.add(const Duration(minutes: 30)))) {
+        availableSensor = false;
+      } else {
+        availableSensor = true;
+      }
     }
 
     return Padding(
