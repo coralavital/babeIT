@@ -12,7 +12,8 @@ class FMessaging {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore _friestore = FirebaseFirestore.instance;
   String? mtoken;
-  List<dynamic>? sensors;
+  Map<String, dynamic>? sensors;
+  List sensorsList = ["heart_rate_sensor", "sound_sensor"];
 
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -20,31 +21,33 @@ class FMessaging {
   DefaultFirebaseOptions firebaseOptions = DefaultFirebaseOptions();
 
   void getChanges() async {
-    DocumentReference reference = _friestore
-        .collection(auth.currentUser!.uid)
-        .doc("user_data");
+    DocumentReference reference =
+        _friestore.collection(auth.currentUser!.uid).doc("user_data");
     reference.snapshots().listen((querySnapshot) {
       sensors = querySnapshot.get("sensors");
       for (var i = 0; i < sensors!.length; i++) {
-        if (sensors![i]['status'] != 'normal') {
-          if (sensors![i] == "heart_rate_sensor") {
-            if(sensors![i]['current_measurement'] < 80) {
-
-            sendPushMessage(
-                mtoken.toString(),
-                "In the last heart rate measurement, a value lower than 80 was reported.\nYou must contact your family doctor for consultation.",
-                "Heart Rate");
+        if (sensors![sensorsList[i]]['status'] == "abnormal") {
+          print('____________________________________________________________');
+          if (sensors![sensorsList[i]] == "heart_rate_sensor") {
+            if (int.parse(sensors![sensorsList[i]]['current_measurement']) <
+                80) {
+              sendPushMessage(
+                  mtoken.toString(),
+                  "In the last heart rate measurement, a value lower than 80 was reported.\nYou must contact your family doctor for consultation.",
+                  "Heart Rate");
             } else {
               sendPushMessage(
-                mtoken.toString(),
-                "In the last heart rate measurement, a value higher than 130 was reported.\nYou must contact your family doctor for consultation.",
-                "Heart Rate");
+                  mtoken.toString(),
+                  "In the last heart rate measurement, a value higher than 130 was reported.\nYou must contact your family doctor for consultation.",
+                  "Heart Rate");
             }
-          } else {
+          } else if (sensors![sensorsList[i]] == "sound_sensor") {
             sendPushMessage(
                 mtoken.toString(),
-                "Your  has days left until its expiration date!\nTry to consume it in the next few days",
-                "Expiration Date");
+                "Your baby is crying now.\nIt is recommended to go and check how it is.",
+                "Sound Rate");
+          } else {
+            continue;
           }
         } else {
           continue;
@@ -120,7 +123,7 @@ class FMessaging {
 
   initInfo() {
     var androidInitialize =
-        const AndroidInitializationSettings('@drawable/notification_icon');
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationsSettings =
         InitializationSettings(android: androidInitialize);
     flutterLocalNotificationsPlugin.initialize(initializationsSettings,
