@@ -32,7 +32,7 @@ class ListContainer extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(left: Dimensions.size10),
       width: double.infinity,
-      height: Dimensions.size170,
+      height: Dimensions.size240,
       decoration: BoxDecoration(
         color: ThemeColors().grey.withOpacity(0.5),
         borderRadius: BorderRadius.circular(Dimensions.size20),

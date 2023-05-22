@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:babe_it/theme/theme_colors.dart';
+import 'package:babe_it/widgets/small_text.dart';
 import 'package:flutter/material.dart';
-
 import '../utils/dimensions.dart';
 
 class CustomContainer extends StatefulWidget {
@@ -22,24 +22,47 @@ class CustomContainer extends StatefulWidget {
   State<CustomContainer> createState() => _CustomContainerState();
 }
 
-class _CustomContainerState extends State<CustomContainer> {
+class _CustomContainerState extends State<CustomContainer> with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> animation;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 4),
+    )
+      ..forward()
+      ..repeat(reverse: true);
+    animation = Tween<double>(begin: 0.0, end: 1.0).animate(controller);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    bool availableSensor = true;
-    if (widget.sensor!['time'] == "") {
-      
-    } else {
+    String color = 'green';
+    if (widget.sensor!['time'].toString() != "") {
       var lastMeasurement = DateTime.parse(widget.sensor!['time']);
       if (DateTime.now()
           .isAfter(lastMeasurement.add(const Duration(minutes: 30)))) {
-        availableSensor = false;
+        color = 'red';
       } else {
-        availableSensor = true;
+        color = "green";
       }
+    } else {
+      color = "There is no data yet";
     }
 
     return Padding(
-      padding: EdgeInsets.only(right: Dimensions.size10, bottom: Dimensions.size7),
+      padding:
+          EdgeInsets.only(right: Dimensions.size10, bottom: Dimensions.size7),
       child: Container(
         width: Dimensions.size170,
         padding: EdgeInsets.all(Dimensions.size15),
@@ -59,7 +82,7 @@ class _CustomContainerState extends State<CustomContainer> {
                   fontWeight: FontWeight.bold),
             ),
             SizedBox(
-              height: Dimensions.size15,
+              height: Dimensions.size5,
             ),
             Text(
               widget.measurement,
@@ -70,31 +93,37 @@ class _CustomContainerState extends State<CustomContainer> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
-              height: Dimensions.size10,
-            ),
             Row(
               children: [
-                availableSensor == true
+                color == "green"
                     ? Container(
                         height: Dimensions.size13,
                         width: Dimensions.size13,
                         decoration: BoxDecoration(
                           color: Colors.greenAccent,
-                          borderRadius: BorderRadius.circular(Dimensions.size13),
+                          borderRadius:
+                              BorderRadius.circular(Dimensions.size13),
                         ),
                       )
-                    : Container(
-                        height: Dimensions.size13,
-                        width: Dimensions.size13,
-                        decoration: BoxDecoration(
-                          color: Colors.redAccent,
-                          borderRadius: BorderRadius.circular(Dimensions.size13),
-                        ),
-                      ),
-                SizedBox(
-                  width: Dimensions.size5,
-                ),
+                    : color == "red"
+                        ? Container(
+                            height: Dimensions.size13,
+                            width: Dimensions.size13,
+                            decoration: BoxDecoration(
+                              color: Colors.redAccent,
+                              borderRadius:
+                                  BorderRadius.circular(Dimensions.size13),
+                            ),
+                          )
+                        : Row(
+                            children: [SmallText(text: "There is no data yet"), AnimatedIcon(
+                          icon: AnimatedIcons.menu_arrow,
+                          color: ThemeColors().main,
+                          progress: animation,
+                          size: Dimensions.size25,
+                          semanticLabel: 'Show menu',
+                        ),]
+                          ),
                 Text(
                   widget.createDate,
                   textAlign: TextAlign.center,

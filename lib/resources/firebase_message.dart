@@ -77,6 +77,22 @@ class FMessaging {
     }
   }
 
+  Future<String> updateNotificationsList(String message) async {
+    String now = DateTime.now().toUtc().toString();
+    print(now);
+    try {
+      await _firestore
+          .collection('${auth.currentUser?.uid}')
+          .doc('user_data')
+          .update({
+        "notifications": FieldValue.arrayUnion([{'time': now, 'message': message}])
+      });
+    } catch (e) {
+      return e.toString();
+    }
+    return 'success';
+  }
+
   void sendPushMessage(String token, String body, String title) async {
     try {
       await http.post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
@@ -100,6 +116,7 @@ class FMessaging {
             },
             "to": token,
           }));
+      updateNotificationsList(body);
     } catch (e) {
       print("Can't push notification");
     }

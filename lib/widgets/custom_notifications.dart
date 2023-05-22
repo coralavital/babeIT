@@ -25,25 +25,26 @@ class CustomNotification extends StatelessWidget {
         notifications.sort(
             (a, b) => (a["time"] as String).compareTo(b["time"] as String));
         if (count <= 5) {
-          for (int i = 0; i < count; i++) {
+          for (int i = 0; i < notifications.length; i++) {
             notificationList +=
-                '${notifications[i]['time']} - ${notifications[i]['content']}\n';
+                '${notifications[i]['sensor'].toString().toUpperCase()}: ${notifications[i]['time']} - ${notifications[i]['measurement']}\n';
           }
         } else {
           for (int i = 0; i < count; i++) {
             notificationList +=
-                '${notifications[i]['time']} - ${notifications[i]['content']}\n';
+                '${notifications[i]['sensor'].toString().toUpperCase()}: ${notifications[i]['time']} - ${notifications[i]['measurement']}\n';
           }
         }
       } else {
         notificationList +=
-            '${notifications[0]['time']} - ${notifications[0]['content']}\n';
+            '${notifications[0]['sensor'].toString().toUpperCase()}: ${notifications[0]['time']} - ${notifications[0]['measurement']}\n';
       }
     } else {
       notificationList += 'There is no notifications yet';
     }
     return Padding(
-      padding: EdgeInsets.only(right: Dimensions.size10, bottom: Dimensions.size7),
+      padding:
+          EdgeInsets.only(right: Dimensions.size10, bottom: Dimensions.size7),
       child: Container(
         padding: EdgeInsets.all(Dimensions.size15),
         decoration: BoxDecoration(

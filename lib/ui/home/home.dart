@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
             builder: (context, snapshot) {
               if (!snapshot.hasData) return LinearProgressIndicator();
               return Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: EdgeInsets.all(Dimensions.size15),
                 child: Column(
                   children: [
                     //Header
@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                                     color: ThemeColors().welcome),
                               ),
                     SizedBox(
-                      height: Dimensions.size25,
+                      height: Dimensions.size40,
                     ),
                       ],
                     ),
@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                                 color: ThemeColors().grey,
                                 borderRadius: BorderRadius.circular(Dimensions.size25),
                               ),
-                              height: Dimensions.size110,
+                              height: Dimensions.size120,
                               width: double.infinity,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 Container(
                                   height: Dimensions.size20,
-                                  width: Dimensions.size120,
+                                  width: Dimensions.size130,
                                   decoration: BoxDecoration(
                                     color: ThemeColors().grey.withOpacity(0.5),
                                     borderRadius: BorderRadius.circular(Dimensions.size10),
@@ -196,7 +196,6 @@ class _HomePageState extends State<HomePage> {
                                       return Container();
                                     } else {
                                       final data = snapshot.data!['sensors'];
-
                                       return ListView.builder(
                                         itemCount: sensors.length,
                                         physics: BouncingScrollPhysics(),
@@ -220,6 +219,7 @@ class _HomePageState extends State<HomePage> {
                                                     ['current_measurement']
                                                 .toString(),
                                             createDate: time,
+                                            
                                             sensor: data[sensors[index]],
                                           );
                                         }),
