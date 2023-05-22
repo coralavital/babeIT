@@ -19,6 +19,8 @@ class AuthRes {
       'sound_sensor': {'history': [], 'current_measurement': '', 'time': ''}
     };
 
+    Map<String, dynamic> babyInfo = {};
+
     String res = 'Some error accoured';
     if (fullName.isNotEmpty && email.isNotEmpty && password.isNotEmpty) {
       try {
@@ -27,7 +29,13 @@ class AuthRes {
         await _firestore
             .collection(_auth.currentUser!.uid)
             .doc('user_data')
-            .set({'name': fullName, 'email': email, 'sensors': sensors, 'notifications': []});
+            .set({
+          'name': fullName,
+          'email': email,
+          'sensors': sensors,
+          'notifications': [],
+          'baby_information': babyInfo
+        });
         res = 'success';
       } catch (error) {
         print(error);

@@ -1,8 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
-
-import 'dart:math';
-
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,8 +7,8 @@ import 'package:babe_it/resources/auth_res.dart';
 import 'package:babe_it/widgets/custom_button.dart';
 import 'package:babe_it/widgets/custom_loader.dart';
 import 'package:babe_it/widgets/text_field.dart';
-
-import '../home/baby_info.dart';
+import '../../widgets/small_text.dart';
+import 'baby_info.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -25,6 +22,12 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final CustomLoader _loader = CustomLoader();
+
+  bool showEmailError = false;
+  bool showPasswordError = false;
+  bool showFirstNameError = false;
+  bool showLastNameError = false;
+  bool showGenderError = false;
 
   @override
   void dispose() {
@@ -48,7 +51,8 @@ class _SignupPageState extends State<SignupPage> {
 
     if (res == 'success') {
       _loader.hideLoader();
-       Navigator.push(
+       Navigator.pushReplacement(
+        
           context,
           MaterialPageRoute(
             builder: (context) => BabyInfoPage(),
@@ -67,6 +71,30 @@ class _SignupPageState extends State<SignupPage> {
     }
   }
 
+  void validatePassword(String password) {
+    RegExp regex = RegExp(r'^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$');
+    if (!regex.hasMatch(password) || password.isEmpty) {
+      showPasswordError = true;
+    } else {
+      showPasswordError = false;
+    }
+  }
+
+  void validateEmail(String email) {
+    if (!EmailValidator.validate(email) || email.isEmpty) {
+      showEmailError = true;
+    } else {
+      showEmailError = false;
+    }
+  }
+
+  void validateName(String firstName) {
+    if (firstName.isEmpty) {
+      showFirstNameError = true;
+    } else {
+      showFirstNameError = false;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,7 +145,15 @@ class _SignupPageState extends State<SignupPage> {
                   fit: BoxFit.none,
                 ),
               ),
-             
+             showEmailError == true
+                        ? SmallText(
+                          color: Colors.red,
+                            textAlign: TextAlign.start,
+                            text:
+                                'Please enter password with at leasy 6 characters and digits\n')
+                        : SizedBox(
+                            height: 10,
+                          ),
               TextFieldWidget(
                 controller: _email,
                 hintText: 'Email',
@@ -126,6 +162,16 @@ class _SignupPageState extends State<SignupPage> {
                   fit: BoxFit.none,
                 ),
               ),
+              showEmailError == true
+                        ? SmallText(
+                          color: Colors.red,
+                            textAlign: TextAlign.start,
+                            text:
+                                'Please enter emaill in the following format:\n'
+                                '\u2022 a@a.a')
+                        : SizedBox(
+                            height: 10,
+                          ),
               TextFieldWidget(
                 controller: _password,
                 hintText: 'Password',
@@ -134,6 +180,15 @@ class _SignupPageState extends State<SignupPage> {
                   fit: BoxFit.none,
                 ),
               ),
+              showPasswordError == true
+                        ? SmallText(
+                          color: Colors.red,
+                            textAlign: TextAlign.start,
+                            text:
+                                'Please enter password with at leasy 6 characters and digits\n')
+                        : SizedBox(
+                            height: 10,
+                          ),
               SizedBox(
                 height: 20,
               ),
@@ -141,6 +196,12 @@ class _SignupPageState extends State<SignupPage> {
                 text: 'Create Account',
                 onTap: () {
                   _loader.showLoader(context);
+                  String email = _email.text.toString().trim();
+                  String password = _password.text.toString().trim();
+                  String firstName = _fullName.text.toString().trim();
+                  validateEmail(email);
+                  validatePassword(password);
+                  validateName(firstName);
                   createAccount();
                 },
               ),
