@@ -1,14 +1,15 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:babe_it/ui/home/notification_list.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:babe_it/theme/theme_colors.dart';
-import 'package:babe_it/ui/home/home.dart';
 import 'package:babe_it/ui/home/history_list.dart';
-import 'package:babe_it/ui/home/account.dart';
-
+import 'package:babe_it/theme/theme_colors.dart';
 import '../../resources/firebase_message.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:babe_it/ui/home/account.dart';
+import 'package:babe_it/ui/home/home.dart';
+import 'package:flutter/material.dart';
+
+import '../../utils/dimensions.dart';
 
 class MainHome extends StatefulWidget {
   const MainHome({super.key});
@@ -45,15 +46,15 @@ class _MainHomeState extends State<MainHome> {
     return Scaffold(
       body: _pages[currentPage],
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(
-          left: 15,
-          right: 15,
-          bottom: 15,
+        padding: EdgeInsets.only(
+          left: Dimensions.size15,
+          right: Dimensions.size15,
+          bottom: Dimensions.size15,
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(Dimensions.size20),
           child: SizedBox(
-            height: 60,
+            height: Dimensions.size60,
             child: BottomNavigationBar(
               showSelectedLabels: false,
               showUnselectedLabels: false,

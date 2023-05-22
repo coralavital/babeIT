@@ -68,4 +68,70 @@ class FirebaseFirestoreService {
     }
     return 'success';
   }
+
+  Future<String> updateBabyInfo(
+      String age, String height, String weight) async {
+    if (height == "" && height == "" && weight == "") {
+      return 'Faild';
+    }
+    else if (height == "") {
+      try {
+        await _firestore
+            .collection('${_auth.currentUser?.uid}')
+            .doc('user_data')
+            .set({
+          'baby_information': ({
+            'weight': weight,
+            'age': age,
+          })
+        }, SetOptions(merge: true));
+      } catch (e) {
+        return e.toString();
+      }
+    } else if (weight == "") {
+      try {
+        await _firestore
+            .collection('${_auth.currentUser?.uid}')
+            .doc('user_data')
+            .set({
+          'baby_information': ({
+            "height": height,
+            'age': age,
+          })
+        }, SetOptions(merge: true));
+      } catch (e) {
+        return e.toString();
+      }
+    } else if (age == "") {
+      try {
+        await _firestore
+            .collection('${_auth.currentUser?.uid}')
+            .doc('user_data')
+            .set({
+          'baby_information': ({
+            "height": height,
+            'weight': weight,
+          })
+        }, SetOptions(merge: true));
+      } catch (e) {
+        return e.toString();
+      }
+    } else {
+      try {
+        await _firestore
+            .collection('${_auth.currentUser?.uid}')
+            .doc('user_data')
+            .set({
+          'baby_information': ({
+            "height": height,
+            'weight': weight,
+            'age': age,
+          })
+        }, SetOptions(merge: true));
+      } catch (e) {
+        return e.toString();
+      }
+    }
+    return 'success';
+  }
 }

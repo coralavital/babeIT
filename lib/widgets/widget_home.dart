@@ -1,8 +1,9 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names
-
-import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:babe_it/theme/theme_colors.dart';
+import 'package:flutter/material.dart';
+
+import '../utils/dimensions.dart';
 
 class WidgetHome extends StatefulWidget {
   final String title;
@@ -25,14 +26,14 @@ class _WidgetHomeState extends State<WidgetHome> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10),
+      padding: EdgeInsets.only(top: Dimensions.size10),
       child: Container(
-        height: 90,
-        padding: EdgeInsets.all(10),
+        height: Dimensions.size90,
+        padding: EdgeInsets.all(Dimensions.size10),
         width: double.infinity,
         decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(Dimensions.size20),
             border: Border.all(width: 1, color: ThemeColors().grey)),
         child: Row(
           children: [
@@ -45,12 +46,12 @@ class _WidgetHomeState extends State<WidgetHome> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(
-                    height: 2,
+                    height: Dimensions.size5,
                   ),
                   Text(
                     widget.description,
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: Dimensions.size20,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       overflow: TextOverflow.ellipsis,
@@ -67,15 +68,15 @@ class _WidgetHomeState extends State<WidgetHome> {
               selectedColor: ThemeColors().blue,
               unselectedColor: ThemeColors().grey,
               padding: 0,
-              width: 50,
-              height: 50,
+              width: Dimensions.size50,
+              height: Dimensions.size50,
               selectedStepSize: 2,
               roundedCap: (_, __) => true,
               child: Center(
                 child: Text(
                   '${widget.progress_percentage}%',
                   style: TextStyle(
-                    fontSize: 15,
+                    fontSize: Dimensions.size15,
                     color: Colors.black,
                   ),
                 ),

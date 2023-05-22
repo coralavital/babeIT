@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
-import 'package:flutter/material.dart';
 import 'package:babe_it/theme/theme_colors.dart';
+import 'package:flutter/material.dart';
+
+import '../utils/dimensions.dart';
 
 class CustomNotification extends StatelessWidget {
   final List<dynamic> notifications;
@@ -41,18 +43,17 @@ class CustomNotification extends StatelessWidget {
       notificationList += 'There is no notifications yet';
     }
     return Padding(
-      padding: const EdgeInsets.only(right: 10, bottom: 8),
+      padding: EdgeInsets.only(right: Dimensions.size10, bottom: Dimensions.size7),
       child: Container(
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.all(Dimensions.size15),
         decoration: BoxDecoration(
           color: ThemeColors().grey.withOpacity(0.5),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(Dimensions.size20),
         ),
         child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 15,
+              height: Dimensions.size15,
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -69,7 +70,7 @@ class CustomNotification extends StatelessWidget {
                   ])),
             ),
             SizedBox(
-              height: 10,
+              height: Dimensions.size10,
             ),
           ],
         ),

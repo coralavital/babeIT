@@ -1,12 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:babe_it/resources/auth_res.dart';
 import 'package:babe_it/widgets/custom_button.dart';
 import 'package:babe_it/widgets/custom_loader.dart';
 import 'package:babe_it/widgets/text_field.dart';
+import 'package:babe_it/resources/auth_res.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/material.dart';
+import '../../utils/dimensions.dart';
 import '../../widgets/small_text.dart';
 import 'baby_info.dart';
 
@@ -25,9 +26,7 @@ class _SignupPageState extends State<SignupPage> {
 
   bool showEmailError = false;
   bool showPasswordError = false;
-  bool showFirstNameError = false;
-  bool showLastNameError = false;
-  bool showGenderError = false;
+  bool showNameError = false;
 
   @override
   void dispose() {
@@ -37,27 +36,21 @@ class _SignupPageState extends State<SignupPage> {
     super.dispose();
   }
 
-
   createAccount() async {
-    String fullName = _fullName.text.toString().trim();
     String email = _email.text.toString().trim();
     String password = _password.text.toString().trim();
-
-    String res = await AuthRes().createAccount(
-      fullName,
-      email,
-      password
-    );
+    String fullName = _fullName.text.toString().trim();
+    String res = await AuthRes().createAccount(fullName, email, password);
 
     if (res == 'success') {
       _loader.hideLoader();
-       Navigator.pushReplacement(
-        
+      Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => BabyInfoPage(),
           ));
     } else {
+      setState(() {});
       _loader.hideLoader();
       Fluttertoast.showToast(
         msg: res,
@@ -66,7 +59,7 @@ class _SignupPageState extends State<SignupPage> {
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.red,
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: Dimensions.size15,
       );
     }
   }
@@ -90,11 +83,12 @@ class _SignupPageState extends State<SignupPage> {
 
   void validateName(String firstName) {
     if (firstName.isEmpty) {
-      showFirstNameError = true;
+      showNameError = true;
     } else {
-      showFirstNameError = false;
+      showNameError = false;
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,23 +113,23 @@ class _SignupPageState extends State<SignupPage> {
               Text(
                 'Welcome',
                 style: TextStyle(
-                  fontSize: 25,
+                  fontSize: Dimensions.size25,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: Dimensions.size20,
               ),
               Text(
                 'Create account to continue...',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: Dimensions.size15,
                   color: Colors.grey,
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: Dimensions.size20,
               ),
               TextFieldWidget(
                 controller: _fullName,
@@ -145,15 +139,14 @@ class _SignupPageState extends State<SignupPage> {
                   fit: BoxFit.none,
                 ),
               ),
-             showEmailError == true
-                        ? SmallText(
-                          color: Colors.red,
-                            textAlign: TextAlign.start,
-                            text:
-                                'Please enter password with at leasy 6 characters and digits\n')
-                        : SizedBox(
-                            height: 10,
-                          ),
+              showNameError == true
+                  ? SmallText(
+                      color: Colors.red,
+                      textAlign: TextAlign.start,
+                      text: 'Please enter full name\n')
+                  : SizedBox(
+                      height: Dimensions.size10,
+                    ),
               TextFieldWidget(
                 controller: _email,
                 hintText: 'Email',
@@ -163,15 +156,14 @@ class _SignupPageState extends State<SignupPage> {
                 ),
               ),
               showEmailError == true
-                        ? SmallText(
-                          color: Colors.red,
-                            textAlign: TextAlign.start,
-                            text:
-                                'Please enter emaill in the following format:\n'
-                                '\u2022 a@a.a')
-                        : SizedBox(
-                            height: 10,
-                          ),
+                  ? SmallText(
+                      color: Colors.red,
+                      textAlign: TextAlign.start,
+                      text: 'Please enter emaill in the following format:\n'
+                          '\u2022 a@a.a')
+                  : SizedBox(
+                      height: Dimensions.size10,
+                    ),
               TextFieldWidget(
                 controller: _password,
                 hintText: 'Password',
@@ -181,16 +173,16 @@ class _SignupPageState extends State<SignupPage> {
                 ),
               ),
               showPasswordError == true
-                        ? SmallText(
-                          color: Colors.red,
-                            textAlign: TextAlign.start,
-                            text:
-                                'Please enter password with at leasy 6 characters and digits\n')
-                        : SizedBox(
-                            height: 10,
-                          ),
+                  ? SmallText(
+                      color: Colors.red,
+                      textAlign: TextAlign.start,
+                      text:
+                          'Please enter password with at least\n6 characters and digits\n')
+                  : SizedBox(
+                      height: Dimensions.size10,
+                    ),
               SizedBox(
-                height: 20,
+                height: Dimensions.size20,
               ),
               CustomButton(
                 text: 'Create Account',
@@ -206,7 +198,7 @@ class _SignupPageState extends State<SignupPage> {
                 },
               ),
               SizedBox(
-                height: 20,
+                height: Dimensions.size20,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -219,12 +211,12 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 5, right: 5),
+                      padding: EdgeInsets.only(left: Dimensions.size5, right: Dimensions.size5),
                       child: Text(
                         'OR',
                         style: TextStyle(
                           color: Colors.grey,
-                          fontSize: 14,
+                          fontSize: Dimensions.size15,
                         ),
                       ),
                     ),
@@ -238,14 +230,14 @@ class _SignupPageState extends State<SignupPage> {
                 ),
               ),
               SizedBox(
-                height: 15,
+                height: Dimensions.size15,
               ),
               GestureDetector(
                 onTap: () {
                   Navigator.pop(context);
                 },
                 child: Container(
-                  height: 50,
+                  height: Dimensions.size50,
                   width: double.infinity,
                   color: Colors.transparent,
                   child: Center(

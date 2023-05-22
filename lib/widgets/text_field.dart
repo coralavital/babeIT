@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:babe_it/utils/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:babe_it/theme/theme_colors.dart';
 
@@ -22,16 +23,16 @@ class TextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        left: 20,
-        right: 20,
-        top: 10,
+        left: Dimensions.size20,
+        right: Dimensions.size20,
+        top: Dimensions.size10,
       ),
       child: Container(
-        height: 50,
+        height: Dimensions.size50,
         width: double.infinity,
         decoration: BoxDecoration(
           color: ThemeColors().grey.withOpacity(0.5),
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(Dimensions.size15),
         ),
         child: TextField(
           controller: controller,

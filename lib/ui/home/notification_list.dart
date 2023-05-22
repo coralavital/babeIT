@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:babe_it/widgets/list_container.dart';
 
+import '../../utils/dimensions.dart';
 import '../../widgets/custom_notifications.dart';
 
 class NotificationsList extends StatefulWidget {
@@ -22,10 +23,10 @@ class _NotificationsList extends State<NotificationsList> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        toolbarHeight: 15,
+        toolbarHeight: Dimensions.size15,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(Dimensions.size15),
         child: Container(
           color: Colors.white,
           child: Column(
@@ -33,23 +34,23 @@ class _NotificationsList extends State<NotificationsList> {
               //Header
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   Text(
                     'Notifications',
                     style: TextStyle(
-                      fontSize: 30,
+                      fontSize: Dimensions.size30,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 25,
+              SizedBox(
+                height: Dimensions.size25,
               ),
               //Body
               Expanded(
                 child: SizedBox(
-                  height: 200,
+                  height: Dimensions.size200,
                   child: StreamBuilder(
                     stream: _firestore
                         .collection(_auth.currentUser!.uid)
@@ -61,7 +62,7 @@ class _NotificationsList extends State<NotificationsList> {
                         return CustomNotification(
                           notifications: data,
                           count: data.length,
-                          fontSize: 15,
+                          fontSize: Dimensions.size15,
                         );
                       } else {
                         return Container();

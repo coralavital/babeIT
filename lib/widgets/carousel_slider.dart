@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
 import 'package:babe_it/theme/theme_colors.dart';
+import 'package:flutter/material.dart';
+import '../utils/dimensions.dart';
 
 class CarouselSliderWidget extends StatelessWidget {
   const CarouselSliderWidget({super.key});
@@ -11,9 +12,9 @@ class CarouselSliderWidget extends StatelessWidget {
       itemCount: 5,
       itemBuilder: ((context, index, realIndex) {
         return Padding(
-          padding: EdgeInsets.only(right: 2, left: 2),
+          padding: EdgeInsets.only(right: Dimensions.size5, left: Dimensions.size5),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(Dimensions.size25),
             child: Container(
               color: ThemeColors().blue,
             ),
@@ -22,7 +23,7 @@ class CarouselSliderWidget extends StatelessWidget {
       }),
       options: CarouselOptions(
         autoPlay: true,
-        height: 160,
+        height: Dimensions.size160,
         enlargeCenterPage: true,
         autoPlayAnimationDuration: const Duration(
           milliseconds: 1000,

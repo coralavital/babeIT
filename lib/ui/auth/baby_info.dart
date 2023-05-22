@@ -3,11 +3,10 @@ import 'package:babe_it/resources/firestore_service.dart';
 import 'package:babe_it/widgets/custom_button.dart';
 import 'package:babe_it/widgets/custom_loader.dart';
 import 'package:babe_it/widgets/text_field.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:babe_it/ui/home/main_home.dart';
 import 'package:flutter/material.dart';
-
+import '../../utils/dimensions.dart';
 import '../../widgets/small_text.dart';
 
 class BabyInfoPage extends StatefulWidget {
@@ -28,7 +27,6 @@ class _BabyInfoPage extends State<BabyInfoPage> {
   bool showAgeError = false;
   bool showHeigthError = false;
   bool showWeightError = false;
-
   String selectedValue = 'Boy';
 
   @override
@@ -67,7 +65,7 @@ class _BabyInfoPage extends State<BabyInfoPage> {
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.red,
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: Dimensions.size15,
       );
     }
   }
@@ -129,24 +127,24 @@ class _BabyInfoPage extends State<BabyInfoPage> {
               Text(
                 'Baby Information',
                 style: TextStyle(
-                  fontSize: 25,
+                  fontSize: Dimensions.size25,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: Dimensions.size20,
               ),
               Text(
                 'We need the information about your baby\nso that we can diagnose accurately and quickly.',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: Dimensions.size15,
                   color: Colors.grey,
                 ),
                 textAlign: TextAlign.center,
               ),
               SizedBox(
-                height: 20,
+                height: Dimensions.size20,
               ),
               DropdownButton(
                   value: selectedValue,
@@ -160,60 +158,52 @@ class _BabyInfoPage extends State<BabyInfoPage> {
                   controller: _babyName,
                   hintText: 'Name',
                   prefixIcon: Icon(Icons.border_color_rounded)),
-                  showNameError == true
-                        ? SmallText(
-                          color: Colors.red,
-                            textAlign: TextAlign.start,
-                            text:
-                                'Please enter full name\n'
-                                )
-                        : SizedBox(
-                            height: 10,
-                          ),
+              showNameError == true
+                  ? SmallText(
+                      color: Colors.red,
+                      textAlign: TextAlign.start,
+                      text: 'Please enter full name\n')
+                  : SizedBox(
+                      height: Dimensions.size10,
+                    ),
               TextFieldWidget(
                   controller: _age,
                   hintText: 'Age',
                   prefixIcon: Icon(Icons.numbers_outlined)),
-                   showAgeError == true
-                        ? SmallText(
-                          color: Colors.red,
-                            textAlign: TextAlign.start,
-                            text:
-                                'Please enter baby\'s age\n'
-                                )
-                        : SizedBox(
-                            height: 10,
-                          ),
+              showAgeError == true
+                  ? SmallText(
+                      color: Colors.red,
+                      textAlign: TextAlign.start,
+                      text: 'Please enter baby\'s age\n')
+                  : SizedBox(
+                      height: Dimensions.size10,
+                    ),
               TextFieldWidget(
                   controller: _height,
                   hintText: 'Height',
                   prefixIcon: Icon(Icons.height_outlined)),
-                   showHeigthError == true
-                        ? SmallText(
-                          color: Colors.red,
-                            textAlign: TextAlign.start,
-                            text:
-                                'Please enter baby\'s height\n'
-                                )
-                        : SizedBox(
-                            height: 10,
-                          ),
+              showHeigthError == true
+                  ? SmallText(
+                      color: Colors.red,
+                      textAlign: TextAlign.start,
+                      text: 'Please enter baby\'s height\n')
+                  : SizedBox(
+                      height: Dimensions.size10,
+                    ),
               TextFieldWidget(
                   controller: _weight,
                   hintText: 'Weight',
                   prefixIcon: Icon(Icons.monitor_weight_outlined)),
-                   showWeightError == true
-                        ? SmallText(
-                          color: Colors.red,
-                            textAlign: TextAlign.start,
-                            text:
-                                'Please enter baby\'s weight\n'
-                                )
-                        : SizedBox(
-                            height: 10,
-                          ),
+              showWeightError == true
+                  ? SmallText(
+                      color: Colors.red,
+                      textAlign: TextAlign.start,
+                      text: 'Please enter baby\'s weight\n')
+                  : SizedBox(
+                      height: Dimensions.size10,
+                    ),
               SizedBox(
-                height: 20,
+                height: Dimensions.size20,
               ),
               CustomButton(
                 text: 'Continue',
@@ -228,11 +218,14 @@ class _BabyInfoPage extends State<BabyInfoPage> {
                   validateAge(age);
                   validateHeight(height);
                   validateWeight(weight);
-                  saveBabyInformation(babyName, age, gender, height, weight);
+                  if(!showAgeError && !showHeigthError && !showNameError && !showWeightError) {
+
+                    saveBabyInformation(babyName, age, gender, height, weight);
+                  }
                 },
               ),
               SizedBox(
-                height: 20,
+                height: Dimensions.size20,
               ),
             ],
           ),

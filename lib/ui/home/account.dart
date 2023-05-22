@@ -3,10 +3,10 @@
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../../utils/dimensions.dart';
+import '../../widgets/baby_info_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../widgets/dialog.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -24,7 +24,7 @@ class _ProfilePage extends State<ProfilePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        toolbarHeight: 15,
+        toolbarHeight: Dimensions.size15,
       ),
       body: StreamBuilder(
         stream: _firestore
@@ -36,7 +36,7 @@ class _ProfilePage extends State<ProfilePage> {
             return Container();
           } else {
             return Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: EdgeInsets.all(Dimensions.size15),
                 child: ListView(
                   children: [
                     Row(
@@ -45,14 +45,14 @@ class _ProfilePage extends State<ProfilePage> {
                         Text(
                           'Account',
                           style: TextStyle(
-                            fontSize: 30,
+                            fontSize: Dimensions.size30,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: 10,
+                      height: Dimensions.size10,
                     ),
                     SettingsGroup(
                       items: [
@@ -62,7 +62,6 @@ class _ProfilePage extends State<ProfilePage> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   var data = snapshot.data!['baby_information'];
-
                                   return BabyDialog(
                                     babyName: data['name'],
                                     babyAge: data['age'],

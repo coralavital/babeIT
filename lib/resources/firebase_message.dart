@@ -10,7 +10,7 @@ import 'dart:convert';
 
 class FMessaging {
   FirebaseAuth auth = FirebaseAuth.instance;
-  FirebaseFirestore _friestore = FirebaseFirestore.instance;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
   String? mtoken;
   Map<String, dynamic>? sensors;
   List sensorsList = ["heart_rate_sensor", "sound_sensor"];
@@ -22,7 +22,7 @@ class FMessaging {
 
   void getChanges() async {
     DocumentReference reference =
-        _friestore.collection(auth.currentUser!.uid).doc("user_data");
+        _firestore.collection(auth.currentUser!.uid).doc("user_data");
     reference.snapshots().listen((querySnapshot) {
       sensors = querySnapshot.get("sensors");
       for (var i = 0; i < sensors!.length; i++) {
@@ -114,7 +114,7 @@ class FMessaging {
   }
 
   void saveToken(String token) async {
-    await _friestore
+    await _firestore
         .collection("${auth.currentUser?.uid}")
         .doc("user_token")
         .set({"token": token});

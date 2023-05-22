@@ -1,6 +1,8 @@
 // imports
 import 'package:flutter/material.dart';
 
+import '../utils/dimensions.dart';
+
 // SmallText class
 class SmallText extends StatelessWidget {
   final Color? color;

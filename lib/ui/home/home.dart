@@ -1,12 +1,13 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:babe_it/theme/theme_colors.dart';
 import 'package:babe_it/widgets/custom_widget.dart';
-import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../../utils/dimensions.dart';
 import '../../widgets/custom_notifications.dart';
+import 'package:babe_it/theme/theme_colors.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -38,7 +39,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 0,
-          toolbarHeight: 15,
+          toolbarHeight: Dimensions.size15,
         ),
         body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
             stream: _firestore.collection(_auth.currentUser!.uid).doc('user_data').snapshots(),
@@ -55,12 +56,12 @@ class _HomePageState extends State<HomePage> {
                        Text(
                                 'Hello, ${snapshot.data!['name']}',
                                 style: TextStyle(
-                                    fontSize: 25,
+                                    fontSize: Dimensions.size25,
                                     fontWeight: FontWeight.bold,
                                     color: ThemeColors().welcome),
                               ),
                     SizedBox(
-                      height: 25,
+                      height: Dimensions.size25,
                     ),
                       ],
                     ),
@@ -72,12 +73,12 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             //Blue top card.
                             Container(
-                              padding: EdgeInsets.all(20),
+                              padding: EdgeInsets.all(Dimensions.size20),
                               decoration: BoxDecoration(
                                 color: ThemeColors().grey,
-                                borderRadius: BorderRadius.circular(25),
+                                borderRadius: BorderRadius.circular(Dimensions.size25),
                               ),
-                              height: 115,
+                              height: Dimensions.size110,
                               width: double.infinity,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -86,17 +87,17 @@ class _HomePageState extends State<HomePage> {
                                     'Today',
                                     style: TextStyle(
                                       color: Colors.black54,
-                                      fontSize: 16,
+                                      fontSize: Dimensions.size15,
                                     ),
                                   ),
                                   SizedBox(
-                                    height: 5,
+                                    height: Dimensions.size5,
                                   ),
                                   Text(
                                     currentDate,
                                     style: TextStyle(
                                       color: Colors.black54,
-                                      fontSize: 30,
+                                      fontSize: Dimensions.size30,
                                       fontWeight: FontWeight.bold,
                                     ),
                                     textAlign: TextAlign.center,
@@ -105,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             SizedBox(
-                              height: 25,
+                              height: Dimensions.size25,
                             ),
                             //In progress section.
                             Row(
@@ -115,19 +116,19 @@ class _HomePageState extends State<HomePage> {
                                   'Sensor Indicators',
                                   style: TextStyle(
                                     color: Colors.black54,
-                                    fontSize: 16,
+                                    fontSize: Dimensions.size15,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 15,
+                                  width: Dimensions.size15,
                                 ),
                                 Container(
-                                  height: 20,
-                                  width: 120,
+                                  height: Dimensions.size20,
+                                  width: Dimensions.size120,
                                   decoration: BoxDecoration(
                                     color: ThemeColors().grey.withOpacity(0.5),
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(Dimensions.size10),
                                   ),
                                   child: StreamBuilder(
                                     stream: _firestore
@@ -167,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                                             '${availableSensor.length} connected',
                                             style: TextStyle(
                                               color: ThemeColors().main,
-                                              fontSize: 14,
+                                              fontSize: Dimensions.size15,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -179,12 +180,12 @@ class _HomePageState extends State<HomePage> {
                               ],
                             ),
                             SizedBox(
-                              height: 20,
+                              height: Dimensions.size20,
                             ),
                             //In progress Stream bulder.
                             Center(
                               child: SizedBox(
-                                height: 140,
+                                height: Dimensions.size140,
                                 child: StreamBuilder(
                                   stream: _firestore
                                       .collection(_auth.currentUser!.uid)
@@ -229,7 +230,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             SizedBox(
-                              height: 20,
+                              height: Dimensions.size20,
                             ),
                             Text(
                               'Notifications',
@@ -237,11 +238,11 @@ class _HomePageState extends State<HomePage> {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   color: Colors.black54,
-                                  fontSize: 15,
+                                  fontSize: Dimensions.size15,
                                   fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
-                              height: 200,
+                              height: Dimensions.size200,
                               child: StreamBuilder(
                                 stream: _firestore
                                     .collection(_auth.currentUser!.uid)
@@ -256,7 +257,7 @@ class _HomePageState extends State<HomePage> {
                                     return CustomNotification(
                                       notifications: data,
                                       count: 5,
-                                      fontSize: 15,
+                                      fontSize: Dimensions.size15,
                                     );
                                   }
                                 },

@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:babe_it/theme/theme_colors.dart';
 
+import '../utils/dimensions.dart';
+
 class CustomButton extends StatelessWidget {
   final String text;
   final dynamic onTap;
@@ -17,20 +19,20 @@ class CustomButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: Dimensions.size20),
         child: Container(
-          height: 50,
+          height: Dimensions.size50,
           width: double.infinity,
           decoration: BoxDecoration(
             color: ThemeColors().main,
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(Dimensions.size15),
           ),
           child: Center(
             child: Text(
               text,
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 16,
+                fontSize: Dimensions.size15,
               ),
             ),
           ),
