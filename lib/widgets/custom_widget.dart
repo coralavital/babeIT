@@ -6,7 +6,7 @@ import '../utils/dimensions.dart';
 
 class CustomContainer extends StatefulWidget {
   final String title;
-  final String measurement;
+  final List<dynamic> measurement;
   final String createDate;
   Map<String, dynamic>? sensor;
 
@@ -22,7 +22,8 @@ class CustomContainer extends StatefulWidget {
   State<CustomContainer> createState() => _CustomContainerState();
 }
 
-class _CustomContainerState extends State<CustomContainer> with SingleTickerProviderStateMixin {
+class _CustomContainerState extends State<CustomContainer>
+    with SingleTickerProviderStateMixin {
   late AnimationController controller;
   late Animation<double> animation;
 
@@ -44,7 +45,6 @@ class _CustomContainerState extends State<CustomContainer> with SingleTickerProv
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     String color = 'green';
@@ -57,7 +57,7 @@ class _CustomContainerState extends State<CustomContainer> with SingleTickerProv
         color = "green";
       }
     } else {
-      color = "There is no data yet";
+      color = "There is no data";
     }
 
     return Padding(
@@ -84,15 +84,35 @@ class _CustomContainerState extends State<CustomContainer> with SingleTickerProv
             SizedBox(
               height: Dimensions.size5,
             ),
-            Text(
-              widget.measurement,
+            widget.measurement[1] != null ?
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [Text(
+              widget.measurement[0],
               style: TextStyle(
                 overflow: TextOverflow.ellipsis,
-                fontSize: Dimensions.size20,
+                fontSize: Dimensions.size15,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),
+            SizedBox(width: Dimensions.size5,),
+            Text(
+              widget.measurement[1],
+              style: TextStyle(
+                overflow: TextOverflow.ellipsis,
+                fontSize: Dimensions.size10,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            )],)
+            :
+            Text(
+              widget.measurement[0],
+              style: TextStyle(
+                overflow: TextOverflow.ellipsis,
+                fontSize: Dimensions.size15,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),),
             Row(
               children: [
                 color == "green"
@@ -115,15 +135,17 @@ class _CustomContainerState extends State<CustomContainer> with SingleTickerProv
                                   BorderRadius.circular(Dimensions.size13),
                             ),
                           )
-                        : Row(
-                            children: [SmallText(text: "There is no data yet"), AnimatedIcon(
-                          icon: AnimatedIcons.menu_arrow,
-                          color: ThemeColors().main,
-                          progress: animation,
-                          size: Dimensions.size25,
-                          semanticLabel: 'Show menu',
-                        ),]
-                          ),
+                        : Column(children: [
+                            SmallText(text: "There is no data yet"),
+                            SizedBox(height: Dimensions.size5,),
+                            AnimatedIcon(
+                              icon: AnimatedIcons.view_list,
+                              color: ThemeColors().main,
+                              progress: animation,
+                              size: Dimensions.size25,
+                              semanticLabel: 'Show menu',
+                            ),
+                          ]),
                 Text(
                   widget.createDate,
                   textAlign: TextAlign.center,

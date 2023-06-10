@@ -57,7 +57,7 @@ class _HistoryList extends State<HistoryList> {
                 ],
               ),
               SizedBox(
-                height: Dimensions.size25,
+                height: Dimensions.size20,
               ),
               //Body
               Expanded(

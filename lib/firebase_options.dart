@@ -16,9 +16,16 @@ import 'package:flutter/foundation.dart'
 /// ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
+    if (kIsWeb) {
+      return web;
+    }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
+      case TargetPlatform.iOS:
+        return ios;
+      case TargetPlatform.macOS:
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -36,14 +43,45 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCilJFJhpqKg_gmAr49eedtM-ApjwMVcMk',
+    appId: '1:840943454960:web:b5b795c4ce1088d4f15035',
+    messagingSenderId: '840943454960',
+    projectId: 'babeit',
+    authDomain: 'babeit.firebaseapp.com',
+    databaseURL: 'https://babeit-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'babeit.appspot.com',
+    measurementId: 'G-3PGTGHMKE8',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDYEpBj9TyYbL04IP68Rq_3T9Da1B_iMoI',
     appId: '1:840943454960:android:2aa2f6bc58cb6914f15035',
     messagingSenderId: '840943454960',
     projectId: 'babeit',
+    databaseURL: 'https://babeit-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'babeit.appspot.com',
-        databaseURL: 'https://fridgeit-d17ae-default-rtdb.europe-west1.firebasedatabase.app',
-
   );
 
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyDn9xEv7DC5UrKMU-aJfP9tuUi-hD2V8jQ',
+    appId: '1:840943454960:ios:689761db8fe372e3f15035',
+    messagingSenderId: '840943454960',
+    projectId: 'babeit',
+    databaseURL: 'https://babeit-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'babeit.appspot.com',
+    iosClientId: '840943454960-eh74keoh1ur9stq2rq81i011jo3k4q10.apps.googleusercontent.com',
+    iosBundleId: 'com.example.babeIt',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDn9xEv7DC5UrKMU-aJfP9tuUi-hD2V8jQ',
+    appId: '1:840943454960:ios:689761db8fe372e3f15035',
+    messagingSenderId: '840943454960',
+    projectId: 'babeit',
+    databaseURL: 'https://babeit-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'babeit.appspot.com',
+    iosClientId: '840943454960-eh74keoh1ur9stq2rq81i011jo3k4q10.apps.googleusercontent.com',
+    iosBundleId: 'com.example.babeIt',
+  );
 }

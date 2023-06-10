@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:babe_it/theme/theme_colors.dart';
+import 'package:babe_it/widgets/small_text.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/dimensions.dart';
 
 class CustomNotification extends StatelessWidget {
   final List<dynamic> notifications;
-  String notificationList = "";
   late DateTime lastNotifications;
 
   final int count;
@@ -18,30 +18,31 @@ class CustomNotification extends StatelessWidget {
     required this.count,
     required this.fontSize,
   });
+
+  Widget getTextWidgets() {
+    List<Widget> elements = <Widget>[];
+    for (var i = 0; i < notifications.length; i++) {
+        elements.add(SmallText(
+          text: '${notifications[i]['time']} -',
+          size: Dimensions.size15,
+          fontWeight: FontWeight.w600,
+          
+        ));
+        elements.add(SmallText(
+          text: '${notifications[i]['message']}\n',
+          size: Dimensions.size13,
+          color: ThemeColors().welcome,
+        ));
+        // elements.add(Text('${elementList[i]['value']}\n'));
+      }
+    
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start, children: elements);
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (notifications.isNotEmpty) {
-      if (notifications.length > 1) {
-        notifications.sort(
-            (a, b) => (a["time"] as String).compareTo(b["time"] as String));
-        if (count <= 5) {
-          for (int i = 0; i < notifications.length; i++) {
-            notificationList +=
-                '${notifications[i]['sensor'].toString().toUpperCase()}: ${notifications[i]['time']} - ${notifications[i]['measurement']}\n';
-          }
-        } else {
-          for (int i = 0; i < count; i++) {
-            notificationList +=
-                '${notifications[i]['sensor'].toString().toUpperCase()}: ${notifications[i]['time']} - ${notifications[i]['measurement']}\n';
-          }
-        }
-      } else {
-        notificationList +=
-            '${notifications[0]['sensor'].toString().toUpperCase()}: ${notifications[0]['time']} - ${notifications[0]['measurement']}\n';
-      }
-    } else {
-      notificationList += 'There is no notifications yet';
-    }
+
     return Padding(
       padding:
           EdgeInsets.only(right: Dimensions.size10, bottom: Dimensions.size7),
@@ -59,16 +60,17 @@ class CustomNotification extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
-                  child: Row(children: [
-                    Text(
-                      notificationList,
-                      overflow: TextOverflow.visible,
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: fontSize,
-                      ),
-                    ),
-                  ])),
+                  child: 
+                  notifications.isNotEmpty
+                          ? getTextWidgets()
+                          : Text(
+                              'There is no history yet',
+                              overflow: TextOverflow.visible,
+                              style: TextStyle(
+                                color: Colors.black38,
+                                fontSize: Dimensions.size13,
+                              ),
+                            )),
             ),
             SizedBox(
               height: Dimensions.size10,

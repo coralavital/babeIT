@@ -1,19 +1,21 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import '../firebase_options.dart';
 import 'dart:convert';
 
 class FMessaging {
   FirebaseAuth auth = FirebaseAuth.instance;
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   String? mtoken;
   Map<String, dynamic>? sensors;
+  List<dynamic>? notifications;
   List sensorsList = ["heart_rate_sensor", "sound_sensor"];
+  List badMeasure = ['abnormal', 'crying'];
+
+  bool sendMessage = false;
 
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -21,35 +23,63 @@ class FMessaging {
   DefaultFirebaseOptions firebaseOptions = DefaultFirebaseOptions();
 
   void getChanges() async {
-    DocumentReference reference =
-        _firestore.collection(auth.currentUser!.uid).doc("user_data");
+    DocumentReference reference = FirebaseFirestore.instance
+        .collection(auth.currentUser!.uid)
+        .doc("user_data");
     reference.snapshots().listen((querySnapshot) {
-      sensors = querySnapshot.get("sensors");
-      for (var i = 0; i < sensors!.length; i++) {
-        if (sensors![sensorsList[i]]['status'] == "abnormal") {
-          if (sensors![sensorsList[i]] == "heart_rate_sensor") {
-            if (int.parse(sensors![sensorsList[i]]['current_measurement']) <
-                80) {
-              sendPushMessage(
-                  mtoken.toString(),
-                  "In the last heart rate measurement, a value lower than 80 was reported.\nYou must contact your family doctor for consultation.",
-                  "Heart Rate");
-            } else {
-              sendPushMessage(
-                  mtoken.toString(),
-                  "In the last heart rate measurement, a value higher than 130 was reported.\nYou must contact your family doctor for consultation.",
-                  "Heart Rate");
-            }
-          } else if (sensors![sensorsList[i]] == "sound_sensor") {
+      notifications = querySnapshot.get('notifications');
+      sensors = querySnapshot.get('sensors');
+      // for (int i = 0; i < notifications!.length; i++) {
+      //   if (notifications![i]['time'] ==
+      //           sensors!['heart_rate_sensor']['time'] ||
+      //       notifications![i]['time'] == sensors!['sound_sensor']['time']) {
+      //         send
+      //       }
+      if (notifications!.isEmpty) {
+        if (int.parse(sensors!['heart_rate_sensor']['value']) < 80) {
             sendPushMessage(
                 mtoken.toString(),
-                "Your baby is crying now.\nIt is recommended to go and check how it is.",
-                "Sound Rate");
-          } else {
-            continue;
+                "In the last heart rate measurement, a value lower than 80 was reported.\nYou must contact your family doctor for consultation.",
+                "Heart Rate",
+                sensors!['heart_rate_sensor']['time']);
+          } else if (int.parse(sensors!['heart_rate_sensors']['value']) > 130) {
+            sendPushMessage(
+                mtoken.toString(),
+                "In the last heart rate measurement, a value higher than 130 was reported.\nYou must contact your family doctor for consultation.",
+                "Heart Rate",
+                sensors!['heart_rate_sensor']['time']);
           }
-        } else {
-          continue;
+          if (sensors!['sound_sensor']['status'] == 'crying') {
+          sendPushMessage(
+              mtoken.toString(),
+              "Your baby is crying now.\nIt is recommended to go and check how it is.",
+              "Sound Rate",
+              sensors!['sound_sensor']['time']);
+        }
+      } else {
+        if (!notifications!.contains(sensors!['heart_rate_sensor']['time'])) {
+          if (int.parse(sensors!['heart_rate_sensor']['value']) < 80) {
+            sendPushMessage(
+                mtoken.toString(),
+                "In the last heart rate measurement, a value lower than 80 was reported.\nYou must contact your family doctor for consultation.",
+                "Heart Rate",
+                sensors!['heart_rate_sensor']['time']);
+          } else if (int.parse(sensors!['heart_rate_sensors']['value']) > 130) {
+            sendPushMessage(
+                mtoken.toString(),
+                "In the last heart rate measurement, a value higher than 130 was reported.\nYou must contact your family doctor for consultation.",
+                "Heart Rate",
+                sensors!['heart_rate_sensor']['time']);
+          }
+        }
+      }
+      if (!notifications!.contains(sensors!['sound_sensor']['time'])) {
+        if (sensors!['sound_sensor']['status'] == 'crying') {
+          sendPushMessage(
+              mtoken.toString(),
+              "Your baby is crying now.\nIt is recommended to go and check how it is.",
+              "Sound Rate",
+              sensors!['sound_sensor']['time']);
         }
       }
     });
@@ -77,15 +107,15 @@ class FMessaging {
     }
   }
 
-  Future<String> updateNotificationsList(String message) async {
-    String now = DateTime.now().toUtc().toString();
-    print(now);
+  Future<String> updateNotificationsList(String message, String time) async {
     try {
       await _firestore
           .collection('${auth.currentUser?.uid}')
           .doc('user_data')
           .update({
-        "notifications": FieldValue.arrayUnion([{'time': now, 'message': message}])
+        "notifications": FieldValue.arrayUnion([
+          {'time': time, 'message': message}
+        ])
       });
     } catch (e) {
       return e.toString();
@@ -93,7 +123,8 @@ class FMessaging {
     return 'success';
   }
 
-  void sendPushMessage(String token, String body, String title) async {
+  void sendPushMessage(
+      String token, String body, String title, String time) async {
     try {
       await http.post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
           headers: <String, String>{
@@ -116,7 +147,7 @@ class FMessaging {
             },
             "to": token,
           }));
-      updateNotificationsList(body);
+      updateNotificationsList(body, time);
     } catch (e) {
       print("Can't push notification");
     }

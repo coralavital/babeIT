@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
 
   getSensorTitle(String sensor) {
     if (sensor == 'heart_rate_sensor') {
-      return "Hart Rate Sensor";
+      return "Heart Rate Sensor";
     } else {
       return 'Sound Sensor';
     }
@@ -215,9 +215,9 @@ class _HomePageState extends State<HomePage> {
                                           return CustomContainer(
                                             title:
                                                 getSensorTitle(sensors[index]),
-                                            measurement: data[sensors[index]]
-                                                    ['current_measurement']
-                                                .toString(),
+                                            measurement: [data[sensors[index]]['status'], data[sensors[index]]['value']]
+                                                    
+                                             ,
                                             createDate: time,
                                             
                                             sensor: data[sensors[index]],
