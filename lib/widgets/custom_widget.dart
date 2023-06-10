@@ -2,6 +2,7 @@
 import 'package:babe_it/theme/theme_colors.dart';
 import 'package:babe_it/widgets/small_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../utils/dimensions.dart';
 
 class CustomContainer extends StatefulWidget {
@@ -62,7 +63,7 @@ class _CustomContainerState extends State<CustomContainer>
 
     return Padding(
       padding:
-          EdgeInsets.only(right: Dimensions.size10, bottom: Dimensions.size7),
+          EdgeInsets.only(right: Dimensions.size5, bottom: Dimensions.size7),
       child: Container(
         width: Dimensions.size170,
         padding: EdgeInsets.all(Dimensions.size15),
@@ -82,38 +83,10 @@ class _CustomContainerState extends State<CustomContainer>
                   fontWeight: FontWeight.bold),
             ),
             SizedBox(
-              height: Dimensions.size5,
+              height: Dimensions.size10,
             ),
-            widget.measurement[1] != null ?
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [Text(
-              widget.measurement[0],
-              style: TextStyle(
-                overflow: TextOverflow.ellipsis,
-                fontSize: Dimensions.size15,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(width: Dimensions.size5,),
-            Text(
-              widget.measurement[1],
-              style: TextStyle(
-                overflow: TextOverflow.ellipsis,
-                fontSize: Dimensions.size10,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            )],)
-            :
-            Text(
-              widget.measurement[0],
-              style: TextStyle(
-                overflow: TextOverflow.ellipsis,
-                fontSize: Dimensions.size15,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 color == "green"
                     ? Container(
@@ -137,7 +110,9 @@ class _CustomContainerState extends State<CustomContainer>
                           )
                         : Column(children: [
                             SmallText(text: "There is no data yet"),
-                            SizedBox(height: Dimensions.size5,),
+                            SizedBox(
+                              height: Dimensions.size5,
+                            ),
                             AnimatedIcon(
                               icon: AnimatedIcons.view_list,
                               color: ThemeColors().main,
@@ -146,13 +121,52 @@ class _CustomContainerState extends State<CustomContainer>
                               semanticLabel: 'Show menu',
                             ),
                           ]),
-                Text(
-                  widget.createDate,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: Dimensions.size10),
-                  overflow: TextOverflow.ellipsis,
+                SizedBox(
+                  width: Dimensions.size5,
                 ),
+                widget.measurement[1] != null
+                    ? Row(children: [
+                        Text(
+                          widget.measurement[0].toString().capitalize!,
+                          style: TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                            fontSize: Dimensions.size20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          width: Dimensions.size5,
+                        ),
+                        Text(
+                          widget.measurement[1].toString().capitalize!,
+                          style: TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                            fontSize: Dimensions.size10,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        )
+                      ])
+                    : Text(
+                        widget.measurement[0].toString().capitalize!,
+                        style: TextStyle(
+                          overflow: TextOverflow.ellipsis,
+                          fontSize: Dimensions.size20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
               ],
+            ),
+            SizedBox(
+              height: Dimensions.size5,
+            ),
+            Text(
+              widget.createDate,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: Dimensions.size10),
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),

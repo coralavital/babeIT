@@ -42,7 +42,10 @@ class CustomNotification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+if (notifications.length > 1) {
+      notifications
+          .sort((a, b) => (b["time"] as String).compareTo(a["time"] as String));
+    }
     return Padding(
       padding:
           EdgeInsets.only(right: Dimensions.size10, bottom: Dimensions.size7),

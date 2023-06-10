@@ -36,7 +36,7 @@ class ListContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     if (elementList.length > 1) {
       elementList
-          .sort((a, b) => (a["timestamp"] as String).compareTo(b["timestamp"] as String));
+          .sort((a, b) => (b["timestamp"] as String).compareTo(a["timestamp"] as String));
     }
 
     return Container(
