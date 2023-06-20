@@ -23,7 +23,7 @@ class _HistoryList extends State<HistoryList> {
 
   getSensorTitle(String sensor) {
     if (sensor == 'heart_rate_sensor') {
-      return "Hart Rate Sensor";
+      return "Heart Rate Sensor";
     } else {
       return 'Sound Sensor';
     }

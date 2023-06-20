@@ -23,7 +23,7 @@ class CustomNotification extends StatelessWidget {
     List<Widget> elements = <Widget>[];
     for (var i = 0; i < notifications.length; i++) {
         elements.add(SmallText(
-          text: '${notifications[i]['time']} -',
+          text: '${notifications[i]['time']}',
           size: Dimensions.size15,
           fontWeight: FontWeight.w600,
           

@@ -20,8 +20,12 @@ class ListContainer extends StatelessWidget {
     List<Widget> elements = <Widget>[];
     for(var i = 0; i < elementList.length; i++){
       if(elementList[i]['value'] != null) {
-        elements.add(SmallText(text: '${elementList[i]['timestamp']} - ${elementList[i]['value']}', size: Dimensions.size13, fontWeight: FontWeight.w500,)); 
-        elements.add(SmallText(text:'${elementList[i]['status']}\n', size: Dimensions.size15, fontWeight: FontWeight.bold, color: ThemeColors().welcome,));
+        elements.add(SmallText(text: '${elementList[i]['timestamp']}', size: Dimensions.size15, fontWeight: FontWeight.w500,)); 
+        // - ${elementList[i]['value']}'
+
+        elements.add(SmallText(text:'${elementList[i]['status']}', size: Dimensions.size15, fontWeight: FontWeight.bold, color: ThemeColors().welcome,));
+                elements.add(SmallText(text: 'Measurement value: ${elementList[i]['value']}\n', size: Dimensions.size10, fontWeight: FontWeight.w500,)); 
+
         // elements.add(Text('${elementList[i]['value']}\n'));
       }
       else {

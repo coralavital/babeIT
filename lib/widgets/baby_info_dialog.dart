@@ -181,6 +181,7 @@ class _BabyDialog extends State<BabyDialog> {
             }
           },
         ),
+        SizedBox(height: Dimensions.size5,),
         showCancelBottun == true
             ? CustomButton(
                 text: 'Cancel',
