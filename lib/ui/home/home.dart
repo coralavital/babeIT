@@ -42,7 +42,10 @@ class _HomePageState extends State<HomePage> {
           toolbarHeight: Dimensions.size15,
         ),
         body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-            stream: _firestore.collection(_auth.currentUser!.uid).doc('user_data').snapshots(),
+            stream: _firestore
+                .collection(_auth.currentUser!.uid)
+                .doc('user_data')
+                .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) return LinearProgressIndicator();
               return Padding(
@@ -53,16 +56,16 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                       Text(
-                                'Hello, ${snapshot.data!['name']}',
-                                style: TextStyle(
-                                    fontSize: Dimensions.size25,
-                                    fontWeight: FontWeight.bold,
-                                    color: ThemeColors().welcome),
-                              ),
-                    SizedBox(
-                      height: Dimensions.size40,
-                    ),
+                        Text(
+                          'Hello, ${snapshot.data!['name']}',
+                          style: TextStyle(
+                              fontSize: Dimensions.size25,
+                              fontWeight: FontWeight.bold,
+                              color: ThemeColors().color7),
+                        ),
+                        SizedBox(
+                          height: Dimensions.size40,
+                        ),
                       ],
                     ),
                     //Body layout.
@@ -75,8 +78,9 @@ class _HomePageState extends State<HomePage> {
                             Container(
                               padding: EdgeInsets.all(Dimensions.size20),
                               decoration: BoxDecoration(
-                                color: ThemeColors().grey,
-                                borderRadius: BorderRadius.circular(Dimensions.size25),
+                                color: ThemeColors().color5,
+                                borderRadius:
+                                    BorderRadius.circular(Dimensions.size25),
                               ),
                               height: Dimensions.size120,
                               width: double.infinity,
@@ -127,8 +131,10 @@ class _HomePageState extends State<HomePage> {
                                   height: Dimensions.size20,
                                   width: Dimensions.size130,
                                   decoration: BoxDecoration(
-                                    color: ThemeColors().grey.withOpacity(0.5),
-                                    borderRadius: BorderRadius.circular(Dimensions.size10),
+                                    color:
+                                        ThemeColors().color5.withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.size10),
                                   ),
                                   child: StreamBuilder(
                                     stream: _firestore
@@ -167,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                                           child: Text(
                                             '${availableSensor.length} connected',
                                             style: TextStyle(
-                                              color: ThemeColors().main,
+                                              color: ThemeColors().color1,
                                               fontSize: Dimensions.size15,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -215,11 +221,11 @@ class _HomePageState extends State<HomePage> {
                                           return CustomContainer(
                                             title:
                                                 getSensorTitle(sensors[index]),
-                                            measurement: [data[sensors[index]]['status'], data[sensors[index]]['value']]
-                                                    
-                                             ,
+                                            measurement: [
+                                              data[sensors[index]]['status'],
+                                              data[sensors[index]]['value']
+                                            ],
                                             createDate: time,
-                                            
                                             sensor: data[sensors[index]],
                                           );
                                         }),

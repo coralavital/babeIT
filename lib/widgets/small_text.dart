@@ -25,6 +25,7 @@ class SmallText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      overflow: TextOverflow.fade,
       style: TextStyle(
         color: color,
         fontWeight: fontWeight.value == 0 ? FontWeight.normal : fontWeight,

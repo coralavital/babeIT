@@ -12,11 +12,12 @@ class CarouselSliderWidget extends StatelessWidget {
       itemCount: 5,
       itemBuilder: ((context, index, realIndex) {
         return Padding(
-          padding: EdgeInsets.only(right: Dimensions.size5, left: Dimensions.size5),
+          padding:
+              EdgeInsets.only(right: Dimensions.size5, left: Dimensions.size5),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(Dimensions.size25),
             child: Container(
-              color: ThemeColors().blue,
+              color: ThemeColors().color2,
             ),
           ),
         );

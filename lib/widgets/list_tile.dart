@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:babe_it/theme/theme_colors.dart';
-import 'package:badges/src/badge.dart' as badge; 
+import 'package:badges/src/badge.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import '../utils/dimensions.dart';
@@ -29,7 +29,7 @@ class ListTileWidget extends StatelessWidget {
           height: Dimensions.size50,
           width: Dimensions.size50,
           decoration: BoxDecoration(
-            color: ThemeColors().blue,
+            color: ThemeColors().color2,
             borderRadius: BorderRadius.circular(Dimensions.size15),
             image: DecorationImage(
               fit: BoxFit.cover,
@@ -41,7 +41,7 @@ class ListTileWidget extends StatelessWidget {
         subtitle: Text(lastMessage),
         trailing: badge.Badge(
           badgeStyle: BadgeStyle(
-            badgeColor: ThemeColors().blue,
+            badgeColor: ThemeColors().color2,
           ),
         ),
       ),

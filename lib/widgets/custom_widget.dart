@@ -68,7 +68,7 @@ class _CustomContainerState extends State<CustomContainer>
         width: Dimensions.size170,
         padding: EdgeInsets.all(Dimensions.size15),
         decoration: BoxDecoration(
-          color: ThemeColors().grey.withOpacity(0.5),
+          color: ThemeColors().color5.withOpacity(0.5),
           borderRadius: BorderRadius.circular(Dimensions.size20),
         ),
         child: Column(
@@ -115,7 +115,7 @@ class _CustomContainerState extends State<CustomContainer>
                             ),
                             AnimatedIcon(
                               icon: AnimatedIcons.view_list,
-                              color: ThemeColors().main,
+                              color: ThemeColors().color1,
                               progress: animation,
                               size: Dimensions.size25,
                               semanticLabel: 'Show menu',

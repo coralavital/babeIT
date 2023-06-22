@@ -34,7 +34,7 @@ class _WidgetHomeState extends State<WidgetHome> {
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(Dimensions.size20),
-            border: Border.all(width: 1, color: ThemeColors().grey)),
+            border: Border.all(width: 1, color: ThemeColors().color5)),
         child: Row(
           children: [
             Expanded(
@@ -65,8 +65,8 @@ class _WidgetHomeState extends State<WidgetHome> {
               totalSteps: int.parse(widget.progress_percentage),
               currentStep: int.parse(widget.progress_percentage),
               stepSize: 2,
-              selectedColor: ThemeColors().blue,
-              unselectedColor: ThemeColors().grey,
+              selectedColor: ThemeColors().color2,
+              unselectedColor: ThemeColors().color5,
               padding: 0,
               width: Dimensions.size50,
               height: Dimensions.size50,

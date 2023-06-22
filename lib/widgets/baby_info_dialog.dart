@@ -115,7 +115,7 @@ class _BabyDialog extends State<BabyDialog> {
         'Baby ${widget.babyName}',
         style: TextStyle(
             fontSize: Dimensions.size30,
-            color: ThemeColors().main,
+            color: ThemeColors().color1,
             fontWeight: FontWeight.w600),
       ),
       SizedBox(
@@ -132,7 +132,7 @@ class _BabyDialog extends State<BabyDialog> {
       TextField(
         controller: _age,
         enabled: editFields,
-        cursorColor: ThemeColors().blue,
+        cursorColor: ThemeColors().color2,
         decoration: InputDecoration(
             border: InputBorder.none,
             hintText: widget.babyAge,
@@ -141,7 +141,7 @@ class _BabyDialog extends State<BabyDialog> {
       TextField(
         controller: _height,
         enabled: editFields,
-        cursorColor: ThemeColors().blue,
+        cursorColor: ThemeColors().color2,
         decoration: InputDecoration(
             border: InputBorder.none,
             hintText: widget.babyHeight,
@@ -150,7 +150,7 @@ class _BabyDialog extends State<BabyDialog> {
       TextField(
         controller: _weight,
         enabled: editFields,
-        cursorColor: ThemeColors().blue,
+        cursorColor: ThemeColors().color2,
         decoration: InputDecoration(
             border: InputBorder.none,
             hintText: widget.babyWeight,
@@ -181,7 +181,9 @@ class _BabyDialog extends State<BabyDialog> {
             }
           },
         ),
-        SizedBox(height: Dimensions.size5,),
+        SizedBox(
+          height: Dimensions.size5,
+        ),
         showCancelBottun == true
             ? CustomButton(
                 text: 'Cancel',

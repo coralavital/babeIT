@@ -31,13 +31,13 @@ class TextFieldWidget extends StatelessWidget {
         height: Dimensions.size50,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: ThemeColors().grey.withOpacity(0.5),
+          color: ThemeColors().color5.withOpacity(0.5),
           borderRadius: BorderRadius.circular(Dimensions.size15),
         ),
         child: TextField(
           controller: controller,
           onSubmitted: onSubmitted,
-          cursorColor: ThemeColors().blue,
+          cursorColor: ThemeColors().color2,
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: hintText,

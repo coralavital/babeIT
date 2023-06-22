@@ -32,7 +32,8 @@ class _MainHomeState extends State<MainHome> {
       currentPage = index;
     });
   }
-    @override
+
+  @override
   void initState() {
     super.initState();
     messaging.requestPermission();
@@ -58,7 +59,7 @@ class _MainHomeState extends State<MainHome> {
             child: BottomNavigationBar(
               showSelectedLabels: false,
               showUnselectedLabels: false,
-              backgroundColor: ThemeColors().grey,
+              backgroundColor: ThemeColors().color5,
               currentIndex: currentPage,
               type: BottomNavigationBarType.fixed,
               onTap: tappedPage,
@@ -66,30 +67,47 @@ class _MainHomeState extends State<MainHome> {
                 BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     'assets/icons/home.svg',
-                    color: ThemeColors().welcome,
+                    color: ThemeColors().color7,
                     fit: BoxFit.none,
                   ),
                   activeIcon: SvgPicture.asset(
                     'assets/icons/home_active.svg',
-                    color: ThemeColors().blue,
+                    color: ThemeColors().color2,
                     fit: BoxFit.none,
                   ),
                   label: 'H',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.notifications_rounded, color: ThemeColors().welcome,),
-                  activeIcon: Icon(Icons.notifications_rounded, color: ThemeColors().blue,),
+                  icon: Icon(
+                    Icons.notifications_rounded,
+                    color: ThemeColors().color7,
+                  ),
+                  activeIcon: Icon(
+                    Icons.notifications_rounded,
+                    color: ThemeColors().color2,
+                  ),
                   label: 'N',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.history_sharp, color: ThemeColors().welcome,),
-                  activeIcon: Icon(Icons.history_sharp, color: ThemeColors().blue,),
+                  icon: Icon(
+                    Icons.history_sharp,
+                    color: ThemeColors().color7,
+                  ),
+                  activeIcon: Icon(
+                    Icons.history_sharp,
+                    color: ThemeColors().color2,
+                  ),
                   label: 'P',
                 ),
-                
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.person, color: ThemeColors().welcome,),
-                  activeIcon: Icon(Icons.person, color: ThemeColors().blue,),
+                  icon: Icon(
+                    Icons.person,
+                    color: ThemeColors().color7,
+                  ),
+                  activeIcon: Icon(
+                    Icons.person,
+                    color: ThemeColors().color2,
+                  ),
                   label: 'S',
                 ),
               ],

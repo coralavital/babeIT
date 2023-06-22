@@ -24,7 +24,10 @@ class CustomLoader {
   _buildLoader() {
     _overlayEntry = OverlayEntry(
       builder: (context) {
-        return SizedBox(height: Dimensions.size30, width: Dimensions.size30, child: buildLoader(context));
+        return SizedBox(
+            height: Dimensions.size30,
+            width: Dimensions.size30,
+            child: buildLoader(context));
       },
     );
   }
@@ -90,7 +93,7 @@ class CustomScreenLoader extends StatelessWidget {
                 width: Dimensions.size30,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
-                  color: ThemeColors().blue,
+                  color: ThemeColors().color2,
                 ),
               ),
             ],

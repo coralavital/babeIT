@@ -22,27 +22,26 @@ class CustomNotification extends StatelessWidget {
   Widget getTextWidgets() {
     List<Widget> elements = <Widget>[];
     for (var i = 0; i < notifications.length; i++) {
-        elements.add(SmallText(
-          text: '${notifications[i]['time']}',
-          size: Dimensions.size15,
-          fontWeight: FontWeight.w600,
-          
-        ));
-        elements.add(SmallText(
-          text: '${notifications[i]['message']}\n',
-          size: Dimensions.size13,
-          color: ThemeColors().welcome,
-        ));
-        // elements.add(Text('${elementList[i]['value']}\n'));
-      }
-    
+      elements.add(SmallText(
+        text: '${notifications[i]['time']}',
+        size: Dimensions.size15,
+        fontWeight: FontWeight.w600,
+      ));
+      elements.add(SmallText(
+        text: '${notifications[i]['message']}\n',
+        size: Dimensions.size13,
+        color: ThemeColors().color7,
+      ));
+      // elements.add(Text('${elementList[i]['value']}\n'));
+    }
+
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start, children: elements);
   }
 
   @override
   Widget build(BuildContext context) {
-if (notifications.length > 1) {
+    if (notifications.length > 1) {
       notifications
           .sort((a, b) => (b["time"] as String).compareTo(a["time"] as String));
     }
@@ -52,7 +51,7 @@ if (notifications.length > 1) {
       child: Container(
         padding: EdgeInsets.all(Dimensions.size15),
         decoration: BoxDecoration(
-          color: ThemeColors().grey.withOpacity(0.5),
+          color: ThemeColors().color5.withOpacity(0.5),
           borderRadius: BorderRadius.circular(Dimensions.size20),
         ),
         child: Column(
@@ -63,17 +62,16 @@ if (notifications.length > 1) {
             Expanded(
               child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
-                  child: 
-                  notifications.isNotEmpty
-                          ? getTextWidgets()
-                          : Text(
-                              'There is no history yet',
-                              overflow: TextOverflow.visible,
-                              style: TextStyle(
-                                color: Colors.black38,
-                                fontSize: Dimensions.size13,
-                              ),
-                            )),
+                  child: notifications.isNotEmpty
+                      ? getTextWidgets()
+                      : Text(
+                          'There is no history yet',
+                          overflow: TextOverflow.visible,
+                          style: TextStyle(
+                            color: Colors.black38,
+                            fontSize: Dimensions.size13,
+                          ),
+                        )),
             ),
             SizedBox(
               height: Dimensions.size10,

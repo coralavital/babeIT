@@ -9,7 +9,7 @@ import '../utils/dimensions.dart';
 class ListContainer extends StatelessWidget {
   final String title;
   List<dynamic> elementList;
-  
+
   ListContainer({
     super.key,
     required this.title,
@@ -18,78 +18,96 @@ class ListContainer extends StatelessWidget {
 
   Widget getTextWidgets() {
     List<Widget> elements = <Widget>[];
-    for(var i = 0; i < elementList.length; i++){
-      if(elementList[i]['value'] != null) {
-        elements.add(SmallText(text: '${elementList[i]['timestamp']}', size: Dimensions.size15, fontWeight: FontWeight.w500,)); 
+   
+    for (var i = 0; i < elementList.length; i++) {
+      if (elementList[i]['value'] != null) {
+        elements.add(SmallText(
+            text: '${elementList[i]['timestamp']}',
+            size: Dimensions.size15,
+            fontWeight: FontWeight.w500,
+            color: ThemeColors().color1));
         // - ${elementList[i]['value']}'
 
-        elements.add(SmallText(text:'${elementList[i]['status']}', size: Dimensions.size15, fontWeight: FontWeight.bold, color: ThemeColors().welcome,));
-                elements.add(SmallText(text: 'Measurement value: ${elementList[i]['value']}\n', size: Dimensions.size10, fontWeight: FontWeight.w500,)); 
+        elements.add(SmallText(
+          text: '${elementList[i]['status']}'.toUpperCase(),
+          size: Dimensions.size13,
+          fontWeight: FontWeight.bold,
+          color: ThemeColors().color2,
+        ));
+        elements.add(SmallText(
+            text: 'Measurement value: ${elementList[i]['value']}\n',
+            size: Dimensions.size13,
+            fontWeight: FontWeight.w500,
+            color: ThemeColors().color3));
 
         // elements.add(Text('${elementList[i]['value']}\n'));
-      }
-      else {
-        elements.add(SmallText(text: '${elementList[i]['timestamp']}', size: Dimensions.size13,));
-        elements.add(SmallText(text:'${elementList[i]['status']}\n'.toUpperCase(), size: Dimensions.size15, fontWeight: FontWeight.bold, color: ThemeColors().welcome,));
+      } else {
+        elements.add(SmallText(
+          text: '${elementList[i]['timestamp']}',
+          size: Dimensions.size15,
+          color: ThemeColors().color1,
+        ));
+        elements.add(SmallText(
+          text: '${elementList[i]['status']}\n'.toUpperCase(),
+          size: Dimensions.size13,
+          fontWeight: FontWeight.bold,
+          color: ThemeColors().color2,
+        ));
       }
     }
-    return Column(crossAxisAlignment: CrossAxisAlignment.center,children: elements);
+    return Padding(padding: EdgeInsets.only(left: Dimensions.size40), child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: elements));
   }
 
   @override
   Widget build(BuildContext context) {
     if (elementList.length > 1) {
-      elementList
-          .sort((a, b) => (b["timestamp"] as String).compareTo(a["timestamp"] as String));
+      elementList.sort((a, b) =>
+          (b["timestamp"] as String).compareTo(a["timestamp"] as String));
     }
 
     return Container(
       padding: EdgeInsets.only(left: Dimensions.size10),
-      width: double.infinity,
+      width: double.maxFinite,
       height: Dimensions.size250,
       decoration: BoxDecoration(
-        color: ThemeColors().grey.withOpacity(0.5),
+        color: ThemeColors().color5.withOpacity(0.5),
         borderRadius: BorderRadius.circular(Dimensions.size20),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: Dimensions.size15,
-                ),
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: Colors.black38,
-                    fontSize: Dimensions.size20,
-                    fontWeight: FontWeight.bold,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                Expanded(
-                    child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: Padding(
-                      padding: EdgeInsets.only(right: Dimensions.size5),
-                      child: elementList.isNotEmpty
-                          ? getTextWidgets()
-                          : Text(
-                              'There is no history yet',
-                              overflow: TextOverflow.visible,
-                              style: TextStyle(
-                                color: Colors.black38,
-                                fontSize: Dimensions.size13,
-                              ),
-                            )),
-                ))
-              ],
-            ),
+          SizedBox(
+            height: Dimensions.size15,
           ),
+          Text(
+            title,
+            style: TextStyle(
+              color: ThemeColors().color7,
+              fontSize: Dimensions.size20,
+              fontWeight: FontWeight.bold,
+              overflow: TextOverflow.fade,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(
+            height: Dimensions.size5,
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: elementList.isNotEmpty
+                    ? getTextWidgets()
+                    : Text(
+                        'There is no history yet',
+                        overflow: TextOverflow.visible,
+                        style: TextStyle(
+                          color: ThemeColors().color3,
+                          fontSize: Dimensions.size13,
+                        ),
+                      )),
+          )
         ],
       ),
     );
