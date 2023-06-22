@@ -58,7 +58,7 @@ class CustomNotification extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: Dimensions.size15,
+              height: Dimensions.size5,
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -75,7 +75,7 @@ class CustomNotification extends StatelessWidget {
                         )),
             ),
             SizedBox(
-              height: Dimensions.size10,
+              height: Dimensions.size5,
             ),
           ],
         ),

@@ -114,22 +114,20 @@ class _HomePageState extends State<HomePage> {
                             ),
                             //In progress section.
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   'Sensor Indicators',
                                   style: TextStyle(
                                     color: Colors.black54,
-                                    fontSize: Dimensions.size15,
+                                    fontSize: Dimensions.size20,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(
-                                  height: Dimensions.size5,
-                                ),
+                              
                                 Container(
-                                  height: Dimensions.size20,
-                                  width: Dimensions.size140,
+                                  height: Dimensions.size25,
+                                  width: Dimensions.size130,
                                   decoration: BoxDecoration(
                                     color:
                                         ThemeColors().color5.withOpacity(0.3),
@@ -243,7 +241,7 @@ class _HomePageState extends State<HomePage> {
                              
                               style: TextStyle(
                                   color: Colors.black54,
-                                  fontSize: Dimensions.size15,
+                                  fontSize: Dimensions.size20,
                                   fontWeight: FontWeight.bold,),
                             ),
                             ],),

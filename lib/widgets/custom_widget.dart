@@ -131,7 +131,7 @@ class _CustomContainerState extends State<CustomContainer>
                           style: TextStyle(
                             overflow: TextOverflow.ellipsis,
                             fontSize: Dimensions.size20,
-                            color: ThemeColors().color7,
+                            color: ThemeColors().color3,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -153,7 +153,7 @@ class _CustomContainerState extends State<CustomContainer>
                         style: TextStyle(
                           overflow: TextOverflow.ellipsis,
                           fontSize: Dimensions.size20,
-                          color: Colors.black,
+                          color: ThemeColors().color3,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -165,7 +165,7 @@ class _CustomContainerState extends State<CustomContainer>
             Text(
               widget.createDate,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: Dimensions.size10, color: ThemeColors().color6),
+              style: TextStyle(fontSize: Dimensions.size13, color: ThemeColors().color6),
               overflow: TextOverflow.ellipsis,
             ),
           ],
