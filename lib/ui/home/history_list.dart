@@ -1,3 +1,4 @@
+import 'package:babe_it/theme/theme_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +53,7 @@ class _HistoryList extends State<HistoryList> {
                     style: TextStyle(
                       fontSize: Dimensions.size30,
                       fontWeight: FontWeight.bold,
+                      color: ThemeColors().color1
                     ),
                   ),
                 ],

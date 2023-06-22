@@ -26,11 +26,12 @@ class CustomNotification extends StatelessWidget {
         text: '${notifications[i]['time']}',
         size: Dimensions.size15,
         fontWeight: FontWeight.w600,
+        color: ThemeColors().color4,
       ));
       elements.add(SmallText(
         text: '${notifications[i]['message']}\n',
         size: Dimensions.size13,
-        color: ThemeColors().color7,
+        color: ThemeColors().color2,
       ));
       // elements.add(Text('${elementList[i]['value']}\n'));
     }
@@ -51,7 +52,7 @@ class CustomNotification extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(Dimensions.size15),
         decoration: BoxDecoration(
-          color: ThemeColors().color5.withOpacity(0.5),
+          color: ThemeColors().color5.withOpacity(0.3),
           borderRadius: BorderRadius.circular(Dimensions.size20),
         ),
         child: Column(

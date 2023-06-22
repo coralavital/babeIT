@@ -25,7 +25,7 @@ class ListContainer extends StatelessWidget {
             text: '${elementList[i]['timestamp']}',
             size: Dimensions.size15,
             fontWeight: FontWeight.w500,
-            color: ThemeColors().color1));
+            color: ThemeColors().color4));
         // - ${elementList[i]['value']}'
 
         elements.add(SmallText(
@@ -45,7 +45,7 @@ class ListContainer extends StatelessWidget {
         elements.add(SmallText(
           text: '${elementList[i]['timestamp']}',
           size: Dimensions.size15,
-          color: ThemeColors().color1,
+          color: ThemeColors().color4,
         ));
         elements.add(SmallText(
           text: '${elementList[i]['status']}\n'.toUpperCase(),

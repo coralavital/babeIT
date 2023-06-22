@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                               fontSize: Dimensions.size25,
                               fontWeight: FontWeight.bold,
-                              color: ThemeColors().color7),
+                              color: ThemeColors().color1),
                         ),
                         SizedBox(
                           height: Dimensions.size40,
@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                             Container(
                               padding: EdgeInsets.all(Dimensions.size20),
                               decoration: BoxDecoration(
-                                color: ThemeColors().color5,
+                                color: ThemeColors().color6.withOpacity(0.1),
                                 borderRadius:
                                     BorderRadius.circular(Dimensions.size25),
                               ),
@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                                   Text(
                                     'Today',
                                     style: TextStyle(
-                                      color: Colors.black54,
+                                      color: ThemeColors().color2,
                                       fontSize: Dimensions.size15,
                                     ),
                                   ),
@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                                   Text(
                                     currentDate,
                                     style: TextStyle(
-                                      color: Colors.black54,
+                                      color: ThemeColors().color2,
                                       fontSize: Dimensions.size30,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             //In progress section.
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
                                   'Sensor Indicators',
@@ -125,14 +125,14 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: Dimensions.size15,
+                                  height: Dimensions.size5,
                                 ),
                                 Container(
                                   height: Dimensions.size20,
-                                  width: Dimensions.size130,
+                                  width: Dimensions.size140,
                                   decoration: BoxDecoration(
                                     color:
-                                        ThemeColors().color5.withOpacity(0.5),
+                                        ThemeColors().color5.withOpacity(0.3),
                                     borderRadius: BorderRadius.circular(
                                         Dimensions.size10),
                                   ),
@@ -173,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                                           child: Text(
                                             '${availableSensor.length} connected',
                                             style: TextStyle(
-                                              color: ThemeColors().color1,
+                                              color: ThemeColors().color2,
                                               fontSize: Dimensions.size15,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -186,67 +186,68 @@ class _HomePageState extends State<HomePage> {
                               ],
                             ),
                             SizedBox(
-                              height: Dimensions.size20,
+                              height: Dimensions.size10,
                             ),
                             //In progress Stream bulder.
-                            Center(
-                              child: SizedBox(
-                                height: Dimensions.size140,
-                                child: StreamBuilder(
-                                  stream: _firestore
-                                      .collection(_auth.currentUser!.uid)
-                                      .doc('user_data')
-                                      .snapshots(),
-                                  builder: (context, snapshot) {
-                                    if (!snapshot.hasData) {
-                                      return Container();
-                                    } else {
-                                      final data = snapshot.data!['sensors'];
-                                      return ListView.builder(
-                                        itemCount: sensors.length,
-                                        physics: BouncingScrollPhysics(),
-                                        scrollDirection: Axis.horizontal,
-                                        itemBuilder: ((context, index) {
-                                          var time;
-                                          if (data[sensors[index]]['time'] ==
-                                              "") {
-                                            time = "";
-                                          } else {
-                                            var a = DateTime.parse(
-                                                data[sensors[index]]['time']);
-                                            time =
-                                                DateFormat('yyyy/MM/dd HH:mm')
-                                                    .format(a);
-                                          }
-                                          return CustomContainer(
-                                            title:
-                                                getSensorTitle(sensors[index]),
-                                            measurement: [
-                                              data[sensors[index]]['status'],
-                                              data[sensors[index]]['value']
-                                            ],
-                                            createDate: time,
-                                            sensor: data[sensors[index]],
-                                          );
-                                        }),
-                                      );
-                                    }
-                                  },
-                                ),
+                            SizedBox(
+                              height: Dimensions.size140,
+                              child: StreamBuilder(
+                                stream: _firestore
+                                    .collection(_auth.currentUser!.uid)
+                                    .doc('user_data')
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (!snapshot.hasData) {
+                                    return Container();
+                                  } else {
+                                    final data = snapshot.data!['sensors'];
+                                    return ListView.builder(
+                                      itemCount: sensors.length,
+                                      physics: BouncingScrollPhysics(),
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: ((context, index) {
+                                        var time;
+                                        if (data[sensors[index]]['time'] ==
+                                            "") {
+                                          time = "";
+                                        } else {
+                                          var a = DateTime.parse(
+                                              data[sensors[index]]['time']);
+                                          time =
+                                              DateFormat('yyyy/MM/dd HH:mm')
+                                                  .format(a);
+                                        }
+                                        return CustomContainer(
+                                          title:
+                                              getSensorTitle(sensors[index]),
+                                          measurement: [
+                                            data[sensors[index]]['status'],
+                                            data[sensors[index]]['value']
+                                          ],
+                                          createDate: time,
+                                          sensor: data[sensors[index]],
+                                        );
+                                      }),
+                                    );
+                                  }
+                                },
                               ),
                             ),
                             SizedBox(
-                              height: Dimensions.size20,
+                              height: Dimensions.size10,
                             ),
+                            Row(children: [
+
                             Text(
                               'Notifications',
-                              textAlign: TextAlign.start,
-                              overflow: TextOverflow.ellipsis,
+                             
                               style: TextStyle(
                                   color: Colors.black54,
                                   fontSize: Dimensions.size15,
-                                  fontWeight: FontWeight.bold),
+                                  fontWeight: FontWeight.bold,),
                             ),
+                            ],),
+                            SizedBox(height: Dimensions.size5,),
                             SizedBox(
                               height: Dimensions.size200,
                               child: StreamBuilder(

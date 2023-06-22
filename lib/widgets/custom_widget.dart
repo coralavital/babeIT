@@ -68,7 +68,7 @@ class _CustomContainerState extends State<CustomContainer>
         width: Dimensions.size170,
         padding: EdgeInsets.all(Dimensions.size15),
         decoration: BoxDecoration(
-          color: ThemeColors().color5.withOpacity(0.5),
+          color: ThemeColors().color5.withOpacity(0.3),
           borderRadius: BorderRadius.circular(Dimensions.size20),
         ),
         child: Column(
@@ -78,7 +78,7 @@ class _CustomContainerState extends State<CustomContainer>
               widget.title,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                  color: Colors.black54,
+                  color: ThemeColors().color4,
                   fontSize: Dimensions.size15,
                   fontWeight: FontWeight.bold),
             ),
@@ -131,7 +131,7 @@ class _CustomContainerState extends State<CustomContainer>
                           style: TextStyle(
                             overflow: TextOverflow.ellipsis,
                             fontSize: Dimensions.size20,
-                            color: Colors.black,
+                            color: ThemeColors().color7,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -143,7 +143,7 @@ class _CustomContainerState extends State<CustomContainer>
                           style: TextStyle(
                             overflow: TextOverflow.ellipsis,
                             fontSize: Dimensions.size10,
-                            color: Colors.black,
+                            color: ThemeColors().color3,
                             fontWeight: FontWeight.w700,
                           ),
                         )
@@ -165,7 +165,7 @@ class _CustomContainerState extends State<CustomContainer>
             Text(
               widget.createDate,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: Dimensions.size10),
+              style: TextStyle(fontSize: Dimensions.size10, color: ThemeColors().color6),
               overflow: TextOverflow.ellipsis,
             ),
           ],
