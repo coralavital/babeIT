@@ -212,7 +212,7 @@ class _HomePageState extends State<HomePage> {
                                           var a = DateTime.parse(
                                               data[sensors[index]]['time']);
                                           time =
-                                              DateFormat('yyyy/MM/dd HH:mm')
+                                              DateFormat('dd-MM-yyy HH:mm:ss')
                                                   .format(a);
                                         }
                                         return CustomContainer(
@@ -220,7 +220,7 @@ class _HomePageState extends State<HomePage> {
                                               getSensorTitle(sensors[index]),
                                           measurement: [
                                             data[sensors[index]]['status'],
-                                            data[sensors[index]]['value']
+                                            
                                           ],
                                           createDate: time,
                                           sensor: data[sensors[index]],
@@ -247,7 +247,7 @@ class _HomePageState extends State<HomePage> {
                             ],),
                             SizedBox(height: Dimensions.size5,),
                             SizedBox(
-                              height: Dimensions.size200,
+                              height: Dimensions.size240,
                               child: StreamBuilder(
                                 stream: _firestore
                                     .collection(_auth.currentUser!.uid)

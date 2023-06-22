@@ -49,10 +49,8 @@ class _CustomContainerState extends State<CustomContainer>
   @override
   Widget build(BuildContext context) {
     String color = 'green';
-    if (widget.sensor!['time'].toString() != "") {
-      var lastMeasurement = DateTime.parse(widget.sensor!['time']);
-      if (DateTime.now()
-          .isAfter(lastMeasurement.add(const Duration(minutes: 30)))) {
+    if (widget.sensor!['status'].toString() != "") {
+      if (widget.sensor!['status'] == "abnormal" || widget.sensor!['status'] == "crying") {
         color = 'red';
       } else {
         color = "green";
@@ -124,39 +122,22 @@ class _CustomContainerState extends State<CustomContainer>
                 SizedBox(
                   width: Dimensions.size5,
                 ),
-                widget.measurement[1] != null
-                    ? Row(children: [
-                        Text(
-                          widget.measurement[0].toString().capitalize!,
-                          style: TextStyle(
-                            overflow: TextOverflow.ellipsis,
-                            fontSize: Dimensions.size20,
-                            color: ThemeColors().color3,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                          width: Dimensions.size5,
-                        ),
-                        Text(
-                          widget.measurement[1].toString().capitalize!,
-                          style: TextStyle(
-                            overflow: TextOverflow.ellipsis,
-                            fontSize: Dimensions.size10,
-                            color: ThemeColors().color3,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        )
-                      ])
-                    : Text(
-                        widget.measurement[0].toString().capitalize!,
-                        style: TextStyle(
-                          overflow: TextOverflow.ellipsis,
-                          fontSize: Dimensions.size20,
-                          color: ThemeColors().color3,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+
+                // ?
+                Row(children: [
+                  Text(
+                    widget.measurement[0].toString().capitalize!,
+                    style: TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      fontSize: Dimensions.size20,
+                      color: ThemeColors().color3,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    width: Dimensions.size5,
+                  ),
+                ])
               ],
             ),
             SizedBox(
@@ -165,7 +146,8 @@ class _CustomContainerState extends State<CustomContainer>
             Text(
               widget.createDate,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: Dimensions.size13, color: ThemeColors().color6),
+              style: TextStyle(
+                  fontSize: Dimensions.size13, color: ThemeColors().color6),
               overflow: TextOverflow.ellipsis,
             ),
           ],

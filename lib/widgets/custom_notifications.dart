@@ -2,6 +2,7 @@
 import 'package:babe_it/theme/theme_colors.dart';
 import 'package:babe_it/widgets/small_text.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../utils/dimensions.dart';
 
@@ -22,8 +23,10 @@ class CustomNotification extends StatelessWidget {
   Widget getTextWidgets() {
     List<Widget> elements = <Widget>[];
     for (var i = 0; i < notifications.length; i++) {
+      DateTime time = DateTime.parse(notifications[i]['time']);
       elements.add(SmallText(
-        text: '${notifications[i]['time']}',
+        text: DateFormat('dd-MM-yyy HH:mm:ss')
+                                                  .format(time),
         size: Dimensions.size15,
         fontWeight: FontWeight.w600,
         color: ThemeColors().color4,

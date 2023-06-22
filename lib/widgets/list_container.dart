@@ -3,6 +3,7 @@ import 'package:babe_it/theme/theme_colors.dart';
 import 'package:babe_it/widgets/small_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../utils/dimensions.dart';
 
@@ -20,14 +21,16 @@ class ListContainer extends StatelessWidget {
     List<Widget> elements = <Widget>[];
    
     for (var i = 0; i < elementList.length; i++) {
+      DateTime time = DateTime.parse(elementList[i]['timestamp']);
+     
       if (elementList[i]['value'] != null) {
         elements.add(SmallText(
-            text: '${elementList[i]['timestamp']}',
-            size: Dimensions.size15,
-            fontWeight: FontWeight.w500,
-            color: ThemeColors().color4));
-        // - ${elementList[i]['value']}'
-
+        text: DateFormat('dd-MM-yyy HH:mm:ss')
+                                                  .format(time),
+        size: Dimensions.size15,
+        fontWeight: FontWeight.w600,
+        color: ThemeColors().color4,
+      ));
         elements.add(SmallText(
           text: '${elementList[i]['status']}'.toUpperCase(),
           size: Dimensions.size13,
@@ -43,10 +46,12 @@ class ListContainer extends StatelessWidget {
         // elements.add(Text('${elementList[i]['value']}\n'));
       } else {
         elements.add(SmallText(
-          text: '${elementList[i]['timestamp']}',
-          size: Dimensions.size15,
-          color: ThemeColors().color4,
-        ));
+        text: DateFormat('dd-MM-yyy HH:mm:ss')
+                                                  .format(time),
+        size: Dimensions.size15,
+        fontWeight: FontWeight.w600,
+        color: ThemeColors().color4,
+      ));
         elements.add(SmallText(
           text: '${elementList[i]['status']}\n'.toUpperCase(),
           size: Dimensions.size13,
@@ -70,7 +75,7 @@ class ListContainer extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(left: Dimensions.size10),
       width: double.maxFinite,
-      height: Dimensions.size250,
+      height: Dimensions.screenHeight / 2.8,
       decoration: BoxDecoration(
         color: ThemeColors().color5.withOpacity(0.5),
         borderRadius: BorderRadius.circular(Dimensions.size20),
