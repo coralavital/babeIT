@@ -35,6 +35,7 @@ class TextFieldWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(Dimensions.size15),
         ),
         child: TextField(
+          obscureText: hintText == 'Password' ? true : false,
           controller: controller,
           onSubmitted: onSubmitted,
           cursorColor: ThemeColors().color2,
