@@ -39,29 +39,6 @@ class _BabyDialog extends State<BabyDialog> {
   final TextEditingController _weight = TextEditingController();
   final CustomLoader _loader = CustomLoader();
 
-  void validateAge(String age) {
-    if (age.isEmpty) {
-      showAgeError = true;
-    } else {
-      showAgeError = false;
-    }
-  }
-
-  void validateHeight(String height) {
-    if (height.isEmpty) {
-      showHeigthError = true;
-    } else {
-      showHeigthError = false;
-    }
-  }
-
-  void validateWeight(String weight) {
-    if (weight.isEmpty) {
-      showWeightError = true;
-    } else {
-      showWeightError = false;
-    }
-  }
 
   updateBabyInformation(String age, String height, String weight) async {
     String res = await FirebaseFirestoreService().updateBabyInfo(
@@ -69,14 +46,16 @@ class _BabyDialog extends State<BabyDialog> {
       height,
       weight,
     );
-
     if (res == 'success') {
       _loader.hideLoader();
-
+      setState(() {
+        
+      });
       buttonText = 'Edit';
-      showCancelBottun = false;
       editFields = false;
-      setState(() {});
+      showCancelBottun = false;
+
+      
     } else {
       _loader.hideLoader();
       Fluttertoast.showToast(
@@ -172,12 +151,10 @@ class _BabyDialog extends State<BabyDialog> {
               String age = _age.text.toString().trim();
               String height = _height.text.toString().trim();
               String weight = _weight.text.toString().trim();
-              validateAge(age);
-              validateHeight(height);
-              validateWeight(weight);
-              if (!showAgeError && !showHeigthError && !showWeightError) {
+         
+        
                 updateBabyInformation(age, height, weight);
-              }
+              
             }
           },
         ),

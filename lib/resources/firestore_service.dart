@@ -71,52 +71,79 @@ class FirebaseFirestoreService {
 
   Future<String> updateBabyInfo(
       String age, String height, String weight) async {
-    if (height == "" && height == "" && weight == "") {
+    if (age.isEmpty && height.isEmpty && weight.isEmpty) {
       return 'Faild';
+    } else if (height.isEmpty) {
+      try {
+        await _firestore
+            .collection('${_auth.currentUser?.uid}')
+            .doc('user_data')
+            .set({
+          'baby_information': ({
+            'weight': weight,
+            'age': age,
+          })
+        }, SetOptions(merge: true));
+      } catch (e) {
+        return e.toString();
+      }
+    } else if (weight.isEmpty) {
+      try {
+        await _firestore
+            .collection('${_auth.currentUser?.uid}')
+            .doc('user_data')
+            .set({
+          'baby_information': ({
+            "height": height,
+            'age': age,
+          })
+        }, SetOptions(merge: true));
+      } catch (e) {
+        return e.toString();
+      }
+    } else if (age.isEmpty) {
+      try {
+        await _firestore
+            .collection('${_auth.currentUser?.uid}')
+            .doc('user_data')
+            .set({
+          'baby_information': ({
+            "height": height,
+            'weight': weight,
+          })
+        }, SetOptions(merge: true));
+      } catch (e) {
+        return e.toString();
+      }
+    } else if (weight.isEmpty && height.isEmpty) {
+      await _firestore
+          .collection('${_auth.currentUser?.uid}')
+          .doc('user_data')
+          .set({
+        'baby_information': ({
+          'age': age,
+        })
+      });
+    } else if (height.isEmpty && age.isEmpty) {
+      await _firestore
+          .collection('${_auth.currentUser?.uid}')
+          .doc('user_data')
+          .set({
+        'baby_information': ({
+          'weight': weight,
+        })
+      });
+    } else if (age.isEmpty && weight.isEmpty) {
+       await _firestore
+          .collection('${_auth.currentUser?.uid}')
+          .doc('user_data')
+          .set({
+        'baby_information': ({
+          'height': height,
+        })
+      });
     }
-    else if (height == "") {
-      try {
-        await _firestore
-            .collection('${_auth.currentUser?.uid}')
-            .doc('user_data')
-            .set({
-          'baby_information': ({
-            'weight': weight,
-            'age': age,
-          })
-        }, SetOptions(merge: true));
-      } catch (e) {
-        return e.toString();
-      }
-    } else if (weight == "") {
-      try {
-        await _firestore
-            .collection('${_auth.currentUser?.uid}')
-            .doc('user_data')
-            .set({
-          'baby_information': ({
-            "height": height,
-            'age': age,
-          })
-        }, SetOptions(merge: true));
-      } catch (e) {
-        return e.toString();
-      }
-    } else if (age == "") {
-      try {
-        await _firestore
-            .collection('${_auth.currentUser?.uid}')
-            .doc('user_data')
-            .set({
-          'baby_information': ({
-            "height": height,
-            'weight': weight,
-          })
-        }, SetOptions(merge: true));
-      } catch (e) {
-        return e.toString();
-      }
-    } else {
+    else {
       try {
         await _firestore
             .collection('${_auth.currentUser?.uid}')
@@ -134,5 +161,4 @@ class FirebaseFirestoreService {
     }
     return 'success';
   }
-
 }
