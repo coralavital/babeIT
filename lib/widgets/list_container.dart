@@ -19,18 +19,49 @@ class ListContainer extends StatelessWidget {
 
   Widget getTextWidgets() {
     List<Widget> elements = <Widget>[];
-   
+    String color = 'green';
     for (var i = 0; i < elementList.length; i++) {
       DateTime time = DateTime.parse(elementList[i]['timestamp']);
-     
+      if (elementList[i]['status'].toString() != "") {
+        if (elementList[i]['status'] == "abnormal" ||
+            elementList[i]['status'] == "crying") {
+          color = 'red';
+        } else {
+          color = "green";
+        }
+      } else {
+        color = "There is no data";
+      }
+
       if (elementList[i]['value'] != null) {
-        elements.add(SmallText(
-        text: DateFormat('dd-MM-yyy HH:mm:ss')
-                                                  .format(time),
-        size: Dimensions.size15,
-        fontWeight: FontWeight.w600,
-        color: ThemeColors().color4,
-      ));
+        elements.add(Row(children: [
+          color == "green"
+              ? Container(
+                  height: Dimensions.size13,
+                  width: Dimensions.size13,
+                  decoration: BoxDecoration(
+                    color: Colors.greenAccent,
+                    borderRadius: BorderRadius.circular(Dimensions.size13),
+                  ),
+                )
+              : Container(
+                  height: Dimensions.size13,
+                  width: Dimensions.size13,
+                  decoration: BoxDecoration(
+                    color: Colors.redAccent,
+                    borderRadius: BorderRadius.circular(Dimensions.size13),
+                  ),
+                ),
+          SizedBox(
+            width: Dimensions.size5,
+          ),
+          SmallText(
+            text: DateFormat('dd-MM-yyy HH:mm:ss').format(time),
+            size: Dimensions.size15,
+            fontWeight: FontWeight.w600,
+            color: ThemeColors().color4,
+          )
+        ]));
         elements.add(SmallText(
           text: '${elementList[i]['status']}'.toUpperCase(),
           size: Dimensions.size13,
@@ -45,13 +76,34 @@ class ListContainer extends StatelessWidget {
 
         // elements.add(Text('${elementList[i]['value']}\n'));
       } else {
-        elements.add(SmallText(
-        text: DateFormat('dd-MM-yyy HH:mm:ss')
-                                                  .format(time),
-        size: Dimensions.size15,
-        fontWeight: FontWeight.w600,
-        color: ThemeColors().color4,
-      ));
+        elements.add(Row(children: [
+          color == "green"
+              ? Container(
+                  height: Dimensions.size13,
+                  width: Dimensions.size13,
+                  decoration: BoxDecoration(
+                    color: Colors.greenAccent,
+                    borderRadius: BorderRadius.circular(Dimensions.size13),
+                  ),
+                )
+              : Container(
+                  height: Dimensions.size13,
+                  width: Dimensions.size13,
+                  decoration: BoxDecoration(
+                    color: Colors.redAccent,
+                    borderRadius: BorderRadius.circular(Dimensions.size13),
+                  ),
+                ),
+          SizedBox(
+            width: Dimensions.size5,
+          ),
+          SmallText(
+            text: DateFormat('dd-MM-yyy HH:mm:ss').format(time),
+            size: Dimensions.size15,
+            fontWeight: FontWeight.w600,
+            color: ThemeColors().color4,
+          )
+        ]));
         elements.add(SmallText(
           text: '${elementList[i]['status']}\n'.toUpperCase(),
           size: Dimensions.size13,
@@ -60,9 +112,11 @@ class ListContainer extends StatelessWidget {
         ));
       }
     }
-    return Padding(padding: EdgeInsets.only(left: Dimensions.size40), child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: elements));
+    return Padding(
+        padding: EdgeInsets.only(left: Dimensions.size40),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: elements));
   }
 
   @override

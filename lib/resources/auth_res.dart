@@ -13,10 +13,10 @@ class AuthRes {
     Map<String, dynamic> sensors = {
       'heart_rate_sensor': {
         'history': [],
-        'current_measurement': '',
+        'status': '',
         'time': ''
       },
-      'sound_sensor': {'history': [], 'current_measurement': '', 'time': ''}
+      'sound_sensor': {'history': [], 'status': '', 'time': ''}
     };
 
     Map<String, dynamic> babyInfo = {};
